@@ -1,0 +1,5 @@
+.widget
+  .widget-title
+    i(class='fa fa-star-o')= ' ' + __('Tagcloud')
+  .tagcloud
+    != tagcloud({min_font: 14, max_font: 22, amount: 100, orderby: 'count'})
