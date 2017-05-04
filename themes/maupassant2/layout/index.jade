@@ -30,7 +30,7 @@ block content
         a(href=url_for(post.path))
           +title(post)
       if post.description
-        .post-content
+        .post-desc
           != post.description
       else if post.excerpt
         .post-content
