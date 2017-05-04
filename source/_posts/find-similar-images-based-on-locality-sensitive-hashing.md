@@ -7,7 +7,7 @@ tags:
 - algorithm
 categories:
 thumbnail: /images/rainbow-colors-153229_960_720.png
-description: A straightforward tutorial on finding similar images.
+description: A tutorial on hashing-powered searching of nearest neighbors.
 mathjax: true
 ---
 
@@ -64,18 +64,17 @@ If we increase the number of buckets, the signatures will be longer. For example
 
 Now we extract a signature for every picture, the next job is to find how to measure the similarities between the signatures.
 
-Consider the signatures as 64-dimensional vectors, `Cosine Similarity` is suitable to quantify their similarities, since it is an inner product space that measures the cosine of the angle between them.
-
 
 ![Euclidean Distance `dist(A,B)` and Cosine Similarity `cos\theta`.](/images/cosine-similarity.jpg)
 
-We can see from the figure above Euclidean Distance is a measure of the absolute distance between each point, but the cosine similarity measures the angle between the vector space, more is to reflect differences in direction, but not the location.
+`Cosine Similarity` is an inner product space that measures the cosine of the angle between them. The figure above illustrates that `Cosine Similarity` measures the angle between the vector space, compared to `Euclidean Distance` (a measure of the absolute distance between two points), more is to reflect differences in direction, but not the location.
+
+If consider the signatures as 64-dimensional vectors, we could use `Cosine Similarity` to quantify their similarities.
 
 
+## Locality Sensitive Hashing
 
-## Hashing
-
-`Locality Sensitive Hashing` (LSH) is an algorithm for searching near neighbors in high dimensional spaces. The core idea is to hash similar items into the same bucket, and let's walk through the process of applying **LSH for Cosine Similarity**, with the help of the following plots from [Benjamin Van Durme & Ashwin Lall, ACL2010](http://www.cs.jhu.edu/~vandurme/papers/VanDurmeLallACL10-slides.pdf) with some modifications.
+`Locality Sensitive Hashing` (LSH) is an algorithm for searching near neighbors in high dimensional spaces. The core idea is to hash similar items into the same bucket. We will walk through the process of applying **LSH for Cosine Similarity**, with the help of the following plots from [Benjamin Van Durme & Ashwin Lall, ACL2010](http://www.cs.jhu.edu/~vandurme/papers/VanDurmeLallACL10-slides.pdf), with a few modifications by me.
 
 ![Figure 1. Cosine Similarity LSH.](/images/cos-lsh-1.png)
 
@@ -92,7 +91,7 @@ We can see from the figure above Euclidean Distance is a measure of the absolute
 
 These randomly picked planes are used as the buckets to hash the data points. We are able to estimate the cosine similarities from the hamming distances, the calculation of latter relatively more efficient.
 
-Cosine Similarity is not sensitive to the magnitude of vectors. In some scenarios, people will apply `Adjusted Cosine Similarity` to reduce such sensitivity. Since the only concern here is to find whether the data points are located at the same side of the plane, there is no need to adjust the vectors before calculating their similarities.
+Cosine Similarity is not sensitive to the magnitude of vectors. In some scenarios, people will apply `Adjusted Cosine Similarity` to reduce such sensitivity. Since the only concern here is to find whether the data points are located at the same side of the plane, there is no need to adjust the vectors, before calculating their similarities.
 
 We can consider the pool of $k$ random planes playing the role of the hash function. Random planes are easy to generate, and highly efficient to apply in matrix.
 
@@ -141,6 +140,8 @@ def sketch(M, k):
 ```
 
 
+![Figure 1. Matrices of Signatures, LSH, and Skethes.](/images/lsh-matrix-1.png)
+
 Let's walk through all these steps before moving to the nearest neighbors:
 
 - Signature
@@ -164,9 +165,7 @@ Let's walk through all these steps before moving to the nearest neighbors:
 
 ## Nearest Neighbors
 
-In order to find the nearest neighbors for a given picture, we select the corresponding row of transposed sketch matrix, which stands for the binary relations between the given picture and $k$ random planes.
-
-By calculate the dot product of picture sketch `1 * k` and matrix `k * N`, we have a `1 * N` array. We would like to make this array highly correlated to their similarities.
+In order to find the nearest neighbors for a given picture, we can calculate the hamming distance in naive loops.
 
 ```Python
 def nested_loop(sketches, line):
@@ -185,7 +184,17 @@ def nested_loop(sketches, line):
     return r
 ```
 
-The naive method uses nested loop to calculate hamming distance and thus becomes inefficient with big matrix.
+The naive method uses `nested loop` to calculate hamming distance, which causes inefficiency for big matrices.
+
+It's intuitive to use matrix-friendly method since we could have millions pictures.
+
+
+![Figure 2. Scores.](/images/lsh-matrix-2.png)
+
+A better method is to select the corresponding row of transposed sketch matrix, which stands for the binary relations between the given picture and $k$ random planes.
+Then calculate dot product of picture sketch `1 * k` and matrix `k * N`, which is a `1 * N` array of integers.
+We would like to make this `1 * N` array, highly correlated to the collection of hamming distances between the given picture and all.
+
 
 ```Python
 >>> import numpy as np
@@ -203,7 +212,9 @@ array([1, 1, 0, 0])
 ```
 
 
-Here a trick could be used to speed up the calculation: to replace `0` with `-1`. The dot product of new sketch will be an integer between $[-k, k]$, and higher result indicates higher similarity because the similar parts contribute `1` and less-similar parts contribute `-1`.
+To speed up the calculation, we replace all `0` with `-1`.
+Since, $ \(-1\) \* \(-1\) = 1 \* 1 = 1 $ And, $ 1 \* \(-1\) = \(-1\) \* 1 = -1 $
+The dot product of new sketch will be an integer between $[-k, k]$, and higher result indicates higher similarity because the similar parts contribute `1` and dissimilar parts contribute `-1`.
 
 
 ```Python
@@ -215,13 +226,13 @@ Here a trick could be used to speed up the calculation: to replace `0` with `-1`
 # min dot is -4, and max is 4
 ```
 
-It's easy to prove that this `score` is directly proportional to the `similarity`:
+It's easy to prove that  `Score` is directly proportional to the `Hamming Distance`:
 
 $$ Score = Sketch\_A * Sketch\_B' = N\_{same} - N\_{diff} $$
 
 Since, $$ N\_{same} + N\_{diff} = k $$
 
-Finally, $$ Similarity\_{A,B} = \frac{N\_{same}}{k} = \frac{ Score + k }{2} * \frac {1}{k} = \frac{Score}{2k} + \frac{1}{2} $$
+Finally, $$ HD\_{A,B} = \frac{N\_{same}}{k} = \frac{ Score + k }{2} * \frac {1}{k} = \frac{Score}{2k} + \frac{1}{2} $$
 
 
 The function is as follows:
@@ -245,6 +256,8 @@ def similar(sketches, line):
 
 By reversing the list of scores, we select best $n$ candidates according to descending scores.
 
+## Tuning Parameters
+
 Tuning parameters to find the optimum balance between accuracy and efficiency is important in the implementation.
 
 For example, in general, the `r-squared` of sketch similarity and signature similarity rises with number of vectors. More random vectors can provide better estimation of the similarity, but at the same time cost more time and memory. Thus experiments are carried out as follows:
@@ -252,13 +265,22 @@ For example, in general, the `r-squared` of sketch similarity and signature simi
 ![Experiments of tuning the number of random vectors. ](https://raw.githubusercontent.com/kainliu/Prism/master/screenshot/vectors-n.jpg)
 
 
-## Prism
+## Demo
 
-I made a side project called [Prism](https://github.com/kainliu/Prism). It contains not only the implementation of above algorithms, also uses a dataset with 24,000 pictures as a full-function demo.
+I made a side project called [Prism](https://github.com/kainliu/Prism).
+Prism provides a web-based interface to explain the process from feature extraction to finding most similar images.
+It contains not only the implementation of above algorithms, also uses a dataset with 24,000 pictures as a full-function demo.
 
-![Prism starts with a clean interface.](https://github.com/kainliu/Prism/raw/master/screenshot/prism-page-001.jpg)
-![After choosing a target picture, the signature is plotted.](https://github.com/kainliu/Prism/raw/master/screenshot/prism-page-002.jpg)
+All the source codes, datasets, results and analysis are in the github repository [github.com/kainliu/Prism](https://github.com/kainliu/Prism).
+
+
+![Prism provides a web-based interface presenting the process.](https://github.com/kainliu/Prism/raw/master/screenshot/prism-page-001.jpg)
+![The signature of the chosen picture will be plotted.](https://github.com/kainliu/Prism/raw/master/screenshot/prism-page-002.jpg)
 ![The sketch is plotted in a fan chart. ](https://github.com/kainliu/Prism/raw/master/screenshot/prism-page-003.jpg)
 ![The nearest neighbors of chosen picture.](https://raw.githubusercontent.com/kainliu/Prism/master/screenshot/prism-page-004.jpg)
 
-All the source codes, datasets, results and analysis are in the github repository [github.com/kainliu/Prism](https://github.com/kainliu/Prism).
+
+## Performance
+
+
+## Wrapping Up
