@@ -7,7 +7,7 @@ tags:
 - algorithm
 categories:
 thumbnail: /images/rainbow-colors-153229_960_720.png
-description: A tutorial on hashing-powered searching of nearest neighbors.
+description: A tutorial on hashing-powered searching for nearest neighbors.
 mathjax: true
 ---
 
@@ -79,7 +79,7 @@ If consider the signatures as 64-dimensional vectors, we could use `Cosine Simil
 ![Figure 1. Cosine Similarity LSH.](/images/cos-lsh-1.png)
 
 1. In the Figure 1, there are two data points in red and yellow, representing two-dimensional data points. We are trying to find their cosine similarity using LSH.
-2. The gray lines are randomly picked planes. Depending on whether the data point locates above or below a gray line, we mark this result as 1 (above the line, in white) or 0 (below the line, in black).
+2. The gray lines are randomly picked planes. Depending on whether the data point locates above or below a gray line, we mark this result as $1$ (above the line, in white) or $0$ (below the line, in black).
 3. On the upper-left corner, there are two rows of white/black squares, representing the results of the two data points respectively.
 
 
@@ -152,7 +152,7 @@ Let's walk through all these steps before moving to the nearest neighbors:
 
 
 - LSH
-  - The LSH family contains $k$ random vectors. (e.g, $k = 200$)
+  - The LSH family contains $k$ random vectors. (e.g, $k = 256$)
   - Each random vector is of $b$ dimension, abd thus has $b$ random floats.  
   - **The shape of random vector matrix** is `k * b`.
 
@@ -212,9 +212,13 @@ array([1, 1, 0, 0])
 ```
 
 
-To speed up the calculation, we replace all `0` with `-1`.
-Since, $ \(-1\) \* \(-1\) = 1 \* 1 = 1 $ And, $ 1 \* \(-1\) = \(-1\) \* 1 = -1 $
-The dot product of new sketch will be an integer between $[-k, k]$, and higher result indicates higher similarity because the similar parts contribute `1` and dissimilar parts contribute `-1`.
+To speed up the calculation, we replace all $0$ with $\-1$.
+Since,
+$$ \(-1\) \* \(-1\) = 1 \* 1 = 1 $$
+And,
+$$ 1 \* \(-1\) = \(-1\) \* 1 = -1 $$
+The dot product of new sketch will be an integer between $[-k, k]$.
+Higher dot product indicates higher similarity, because each similar part contributes $1$ to the result and dissimilar one contributes $-1$.
 
 
 ```Python
@@ -226,13 +230,13 @@ The dot product of new sketch will be an integer between $[-k, k]$, and higher r
 # min dot is -4, and max is 4
 ```
 
-It's easy to prove that  `Score` is directly proportional to the `Hamming Distance`:
+It's easy to prove that `Dot Product`(`DP`) is directly proportional to the `Hamming Distance`(`HD`):
 
-$$ Score = Sketch\_A * Sketch\_B' = N\_{same} - N\_{diff} $$
+$$ DP\_{A,B} = Sketch\_A * Sketch\_B' = N\_{same} - N\_{diff} $$
 
 Since, $$ N\_{same} + N\_{diff} = k $$
 
-Finally, $$ HD\_{A,B} = \frac{N\_{same}}{k} = \frac{ Score + k }{2} * \frac {1}{k} = \frac{Score}{2k} + \frac{1}{2} $$
+Finally, $$ HD\_{A,B} = \frac{N\_{same}}{k} = \frac{ DP\_{A,B} + k }{2} * \frac {1}{k} = \frac{DP\_{A,B}}{2k} + \frac{1}{2} $$
 
 
 The function is as follows:
@@ -264,11 +268,12 @@ For example, in general, the `r-squared` of sketch similarity and signature simi
 
 ![Experiments of tuning the number of random vectors. ](https://raw.githubusercontent.com/kainliu/Prism/master/screenshot/vectors-n.jpg)
 
+From the above graphs, we can select $k=256$ to get a r-squared greater than $0.9$ while keeping efficiency.
 
 ## Demo
 
 I made a side project called [Prism](https://github.com/kainliu/Prism).
-Prism provides a web-based interface to explain the process from feature extraction to finding most similar images.
+Prism provides a web-based interface to explain the process from extracting features to searching nearest neighbors.
 It contains not only the implementation of above algorithms, also uses a dataset with 24,000 pictures as a full-function demo.
 
 All the source codes, datasets, results and analysis are in the github repository [github.com/kainliu/Prism](https://github.com/kainliu/Prism).
@@ -280,7 +285,15 @@ All the source codes, datasets, results and analysis are in the github repositor
 ![The nearest neighbors of chosen picture.](https://raw.githubusercontent.com/kainliu/Prism/master/screenshot/prism-page-004.jpg)
 
 
-## Performance
-
-
 ## Wrapping Up
+
+<div style="clear:both;overflow:hidden">
+  <img src="/images/prism-demo-1.png" width = "49%" alt="" style="float:left"/><img src="/images/prism-demo-2.png" width = "49%" alt="" style="float:left"/>
+  <img src="/images/prism-demo-3.png" width = "49%" alt="" style="float:left;clear:both"/><img src="/images/prism-demo-4.png" width = "49%" alt="" style="float:left"/>
+</div>
+
+As we seen from the above results, the nearest neighbors have similar colors with the given picture and basically fits the original idea.
+
+However, we find that this method will be highly influenced by the diversity of colors, for example, the cups and the baseballs in the last graph are considered as very similar due to the large percentage of white colors. This shortcoming can be overcame by taking boundaries of the objects into account, which is called `contour detection` or `edge detection`.
+
+<img src="/images/edge-detection.png" width = "50%" alt="Edge detection. From Mathworks.com" />

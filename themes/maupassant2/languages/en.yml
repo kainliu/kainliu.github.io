@@ -1,9 +1,9 @@
-reading_label: Reading articles in %s
+reading_label: Reading articles in '%s'
 blog: Blog
 albums: Albums
 categories: Categories
 tags: Tags
-archive: Archive
+archive: Archives
 links: Links
 about: About
 recent: Recent
@@ -14,7 +14,8 @@ blogroll: Blogroll
 history: History
 rss: RSS
 guestbook: Guestbook
-home: Home
+home: Posts
+notes: Notes
 recent_comments: Recent Comments
 Readmore: Read More
 belongsto: Categorized in

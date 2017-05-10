@@ -19,13 +19,16 @@ logo: /images/blog-logo.png
 menu:
   - page: home
     directory: /
-    icon: fa-home
+    icon: fa-rocket
+  - page: notes
+    directory: tags/notes/
+    icon: fa-check-circle
   - page: archive
     directory: archives/
-    icon: fa-archive
+    icon: fa-sitemap
   - page: about
     directory: about/
-    icon: fa-user
+    icon: fa-user-circle
   # - page: rss
   #   directory: atom.xml
   #   icon: fa-rss

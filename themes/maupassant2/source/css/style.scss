@@ -15,14 +15,14 @@ specific font stacks to ensure the greatest OS/browser compatibility.
 html, button, input, select, textarea,
 .pure-g [class *= "pure-u"] {
     /* Set your content font stack here: */
-    font-family: "PingFangSC-Regular", Helvetica, "Helvetica Neue", "Segoe UI",
+    font-family: /*"PingFangSC-Regular",*/ "Helvetica Neue", Helvetica,  "Segoe UI",
                  "Hiragino Sans GB", "Source Han Sans CN", "Microsoft YaHei", "STHeiti", "WenQuanYi Micro Hei", sans-serif;
 }
 
 body {
     background-color: #FFF;
     color: #444444;
-    font-family: "TIBch", "Classic Grotesque W01", "Helvetica Neue", Arial, "Hiragino Sans GB", "STHeiti", "Microsoft YaHei", "WenQuanYi Micro Hei", SimSun, sans-serif;
+    font-family: /*"TIBch", "Classic Grotesque W01",*/ "Helvetica Neue", Arial, "Hiragino Sans GB", "STHeiti", "Microsoft YaHei", "WenQuanYi Micro Hei", SimSun, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-size: 14px;
@@ -249,7 +249,7 @@ div {
         }
     }
     .post-desc {
-        font: 17px/1.1 "Asar","Times New Roman", Georgia, Times, sans-serif;
+        font: 18px/1.1 "Asar","Times New Roman", Georgia, Times, sans-serif;
     }
     .post-meta {
         padding: 0;
@@ -312,7 +312,7 @@ div {
     }
     .post-content {
         clear: left;
-        font-size: 15px;
+        font-size: 16px;
         line-height: 1.77;
         color: #000;
         padding-top: 60px;
@@ -1154,7 +1154,7 @@ figure.highlight,
     // All lines in gutter and code container
     .line {
         height:    1.3em;
-        font-size: 13px;
+        font-size: 14px;
     }
 }
 

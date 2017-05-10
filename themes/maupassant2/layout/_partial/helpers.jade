@@ -13,6 +13,36 @@ mixin a_with_current(href, content, id)
     a(href=url)
       i(class='fa' + ' ' + id)= ' ' + content
 
+
+// home > archives > notes > about > posts (null)
+- var active = false
+mixin a_with_current_2(path, content, id)
+  - var url = url_for(path)
+
+  if active
+    a(href=url)
+      i(class='fa' + ' ' + id)= ' ' + content
+  else if (is_home() && path == '/')
+    - active = true
+    a.current(href=url)
+      i(class='fa' + ' ' + id)= ' ' + content
+  else if (is_archive() && path.match('archives/'))
+    - active = true
+    a.current(href=url)
+      i(class='fa' + ' ' + id)= ' ' + content
+  else if (is_tag('notes') && path.match('tags/notes/'))
+    - active = true
+    a.current(href=url)
+      i(class='fa' + ' ' + id)= ' ' + content
+  else if (is_page() && path.match('about/'))
+    - active = true
+    a.current(href=url)
+      i(class='fa' + ' ' + id)= ' ' + content
+  else
+    a(href=url)
+      i(class='fa' + ' ' + id)= ' ' + content
+
+
 mixin title(page)
   if page
     if page.title
