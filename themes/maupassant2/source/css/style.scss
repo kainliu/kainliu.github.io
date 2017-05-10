@@ -1711,7 +1711,9 @@ figure.highlight,
         background-position: center center;
         background-size: contain;
         max-width: 100%;
-
+        position: relative;
+        overflow: hidden;
+        
         span{
           line-height: 25px;
           font-size: 15px;
@@ -1742,6 +1744,19 @@ figure.highlight,
         &:hover{
           border-bottom: none;
           color: #222;
+        }
+
+        i{
+          font-size: 90px;
+          position: absolute;
+          line-height: 112px;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          z-index: -1;
+          vertical-align: middle;
+          text-align: center;
         }
       }
       /*
