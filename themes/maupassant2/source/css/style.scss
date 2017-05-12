@@ -209,13 +209,13 @@ div {
   border-radius: 5px;
   padding: 0 !important;
   .post-title {
-    border-bottom: 1px solid #ddd;
-    padding: 10px 10px 20px 10px;
+    padding: 20px 10px;
     font-size: 20px !important;
     text-align: center !important;
   }
   .post-desc {
-    font-size: 17px !important;
+    border-top: 1px solid #ddd;
+    font-size: 16px !important;
     font-weight: normal;
     padding: 20px 10px !important;
     text-align: center !important;
@@ -229,9 +229,10 @@ div {
     }
   }
   .readmore{
-    line-height: 22px;
+    line-height: 30px;
   }
   .readmore a{
+    padding: 9px 15px;
     font-size: 12px;
   }
 }
@@ -253,10 +254,9 @@ div {
     }
     .post-meta {
         padding: 0;
-        margin: 15px 0 0;
+        margin: 15px 0;
         color: #6E7173;
-        float: left;
-        display: inline;
+        display: inline-block;
         text-indent: .15em;
         // &:before {
         //       font-family: "FontAwesome";
@@ -315,8 +315,8 @@ div {
         font-size: 16px;
         line-height: 1.77;
         color: #000;
-        padding-top: 60px;
-        padding-bottom: 60px;
+        margin-top: 40px;
+        margin-bottom: 40px;
         // text-align: justify;
         // text-justify: distribute;
         word-break: normal;
@@ -1713,8 +1713,10 @@ figure.highlight,
         max-width: 100%;
         position: relative;
         overflow: hidden;
-        
+
         span{
+          min-width: 120px;
+          text-align: center;
           line-height: 25px;
           font-size: 15px;
           color: #555;

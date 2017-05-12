@@ -8,19 +8,19 @@ tag:
 - notes
 ---
 
-## Priority Queue
+## Priority Queue And Heap
 
 {% blockquote StackOverflow / http://stackoverflow.com/questions/18993269/difference-between-priority-queue-and-a-heap difference-between-priority-queue-and-a-heap %}
 
-A priority queue is an abstract datatype. It is a shorthand way of describing a particular interface and behavior, and says nothing about the underlying implementation.
+A priority queue is an `abstract datatype`. It is a shorthand way of describing a particular interface and behavior, and says nothing about the underlying implementation.
 
-A heap is a data structure. It is a name for a particular way of storing data that makes certain operations very efficient.
+A heap is a `data structure`. It is a name for a particular way of storing data that makes certain operations very efficient.
 
-It just so happens that a heap is a very good data structure to implement a priority queue, because the operations which are made efficient by the heap data strucure are the operations that the priority queue interface needs.
+It just so happens that a heap is a very good data structure to implement a priority queue, because the operations which are made efficient by the heap data structure are the operations that the priority queue interface needs.
 
 {% endblockquote %}
 
-## Example
+## Python Example
 
 `Leetcode 23`: Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.
 

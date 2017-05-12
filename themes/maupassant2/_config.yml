@@ -20,9 +20,9 @@ menu:
   - page: home
     directory: /
     icon: fa-rocket
-  - page: notes
-    directory: tags/notes/
-    icon: fa-check-circle
+  # - page: notes
+  #   directory: tags/notes/
+  #   icon: fa-check-circle
   - page: archive
     directory: archives/
     icon: fa-sitemap

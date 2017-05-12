@@ -10,6 +10,7 @@ block content
 
   for post in page.posts.toArray()
 
+
     // only show all the blogs without `notes` tag
     // notes are twitters instead of posts.
 
@@ -19,7 +20,15 @@ block content
       if 'notes' == tag.name
         - contains_tag_of_notes = true
 
-    if contains_tag_of_notes == false
+    if contains_tag_of_notes
+      div.post.index-post
+        h3.post-title
+          a(href=url_for(post.path))
+            +title(post)
+        div(class='readmore')
+          a(href=url_for(post.path))= __('Readnote')
+
+    else
       div.post.index-post
         //-
           h1.post-title
