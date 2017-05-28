@@ -294,6 +294,6 @@ All the source codes, datasets, results and analysis are in the github repositor
 
 As we seen from the above results, the nearest neighbors have similar colors with the given picture and basically fits the original idea.
 
-However, we find that this method will be highly influenced by the diversity of colors, for example, the cups and the baseballs in the last graph are considered as very similar due to the large percentage of white colors. This shortcoming can be overcame by taking boundaries of the objects into account, which is called `contour detection` or `edge detection`.
+However, we find that this method will be highly influenced by the diversity of colors, for example, in the last graph the cups and the baseballs share large percentage of white colors and thus the method functions poorly. This shortcoming could be overcame by taking boundaries of the objects into account, which is called `contour detection` or `edge detection`.
 
 <img src="/images/edge-detection.png" width = "50%" alt="Edge detection. From Mathworks.com" />

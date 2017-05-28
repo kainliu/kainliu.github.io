@@ -1,5 +1,5 @@
 ---
-title: Understanding Promise With Three Examples
+title: Promise
 date: 2017-05-09 14:00:10
 disqus: true
 tag:

@@ -6,11 +6,14 @@ tag:
 - leetcode
 - python
 - notes
+mathjax: true
 ---
 
 ## Priority Queue And Heap
 
-{% blockquote StackOverflow / http://stackoverflow.com/questions/18993269/difference-between-priority-queue-and-a-heap difference-between-priority-queue-and-a-heap %}
+StackOverflow / <http://stackoverflow.com/questions/18993269/difference-between-priority-queue-and-a-heap>
+
+{% blockquote %}
 
 A priority queue is an `abstract datatype`. It is a shorthand way of describing a particular interface and behavior, and says nothing about the underlying implementation.
 
