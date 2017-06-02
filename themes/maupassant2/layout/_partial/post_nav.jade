@@ -20,9 +20,9 @@ if page.next || page.prev
         )
           span
             =page.prev.title
-          i(
-            class='fa fa-3 fa-hand-o-left'
-          )
+          i
+            +thumbnailPNG()
+          
 
 
     if page.next
@@ -40,6 +40,5 @@ if page.next || page.prev
         )
           span
             =page.next.title
-          i(
-            class='fa fa-3 fa-hand-o-right'
-          )
+          i
+            +thumbnailPNG()

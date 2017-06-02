@@ -6,7 +6,7 @@ tags:
 - hardware
 - circuits
 categories:
-thumbnail: /images/random-number-transistor.jpg
+thumbnail: /images/coin.png
 description: Randomness origins from an elegant design of hardware.
 mathjax: true
 ---

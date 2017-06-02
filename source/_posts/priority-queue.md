@@ -1,7 +1,6 @@
 ---
 title: Priority Queue
 date: 2017-05-09 14:00:10
-disqus: false
 tag:
 - leetcode
 - python

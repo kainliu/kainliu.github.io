@@ -66,7 +66,7 @@ div {
 #header {
     padding: 40px 0 0;
     text-align: left;
-    border-bottom: 1px solid #ddd;
+    // border-bottom: 1px solid #ddd;
     position: relative;
     .site-name {
         // margin-bottom: 40px;
@@ -97,17 +97,26 @@ div {
         bottom: 0;
         a {
             display: inline-block;
-            padding: 3px 20px 3px;
+            padding: 5px 20px;
+            margin: 0 5px;
             line-height: 30px;
             color: #444;
             font-size: 18px;
-            border: 1px solid transparent;
+            border-radius: 4px;
+            // border: 1px solid transparent;
             &:hover {
-                border-bottom-color: #444;
+                // border-bottom-color: #444;
+                background: #f1f1f1;
             }
             &.current {
-                border: 1px solid #ddd;
-                border-bottom-color: #fff;
+                // border: 1px solid #ddd;
+                // border-bottom-color: #fff;
+                // background: #3498DB;
+                background: #f7f8f8;
+                // border-bottom: 1px solid #3498DB;
+                .fa{
+                    color: #2980B9;
+                }
             }
             .fa{
               font-family: FontAwesome, "Asar", "Times New Roman", Georgia, Times, sans-serif;
@@ -203,38 +212,50 @@ div {
 }
 
 /* the post of index, overrides the default post style*/
+.index-post-note {
+    // filter: grayscale(100%);
+}
 .index-post{
-  border: 1px solid #ddd;
-  margin: 20px 0 40px;
-  border-radius: 5px;
+  border: 2px solid #fff;
+  // background: #f5f5f5;
+  margin: 20px 0 20px;
+  border-radius: 10px;
+  // border: 1px solid #000;   
   padding: 0 !important;
   .post-title {
-    padding: 20px 10px;
+    padding: 10px 10px 10px;
     font-size: 20px !important;
+    line-height: 1.5em !important;
     text-align: center !important;
   }
   .post-desc {
-    border-top: 1px solid #ddd;
-    font-size: 16px !important;
+    /*border-top: 1px solid #ddd;*/
+    font-size: 14px !important;
+    line-height: 1.5em !important;
     font-weight: normal;
-    padding: 20px 10px !important;
+    // padding: 10px 15px !important;
     text-align: center !important;
   }
   .post-content {
-    margin: 20px 0 !important;
-    padding: 20px 10px 5px 10px !important;
+    margin: 4px !important;
+    background: #fff;
+    border-radius: 5px;
+    padding: 0px !important;
     text-align: center !important;
     img{
-      /* add max-height */
-      max-height: 200px;
+      height: 160px;
     }
   }
   .readmore{
+    margin-top: 10px;
     line-height: 30px;
   }
   .readmore a{
     padding: 9px 15px;
     font-size: 12px;
+    border-bottom: 1px solid #DDDDDD;
+    border-radius: 4px;
+    background: #f7f8f8;
   }
 }
 
@@ -256,7 +277,7 @@ div {
 
 
 .post {
-    padding: 25px 0 15px;
+    padding: 50px 0 30px;
 
     .post-title {
         margin: 0;
@@ -268,7 +289,7 @@ div {
         }
     }
     .post-desc {
-        font: 18px/1.1 "Asar","Times New Roman", Georgia, Times, sans-serif;
+        // font: 18px/1.1 "Asar","Times New Roman", Georgia, Times, sans-serif;
     }
     .post-meta {
         padding: 0;
@@ -333,7 +354,7 @@ div {
         font-size: 16px;
         line-height: 1.77;
         color: #000;
-        margin-top: 40px;
+        margin-top: 50px;
         margin-bottom: 40px;
         // text-align: justify;
         // text-justify: distribute;
@@ -586,8 +607,8 @@ pre {
 @media print, screen and (min-width: 48em) {
 #rocket {
     position: fixed;
-    right: 50px;
-    bottom: 50px;
+    right: 30px;
+    bottom: 30px;
     display: block;
     visibility: hidden;
     width: 26px;
@@ -923,7 +944,7 @@ pre {
 /* read more*/
 .readmore{
   line-height: 30px;
-  overflow: hidden;
+  // overflow: hidden;
   text-align: center !important;
 }
 .readmore a {
@@ -935,14 +956,15 @@ pre {
     // border-radius: 5px;
     background: #F8F8F8;
     // float: right;
-    &:after {
-        font-family: "FontAwesome";
-        content: "\f101";
-        padding-left: 0.3em;
-    }
+    // &:after {
+    //     font-family: "FontAwesome";
+    //     content: "\f101";
+    //     padding-left: 0.3em;
+    // }
     &:hover {
-        background: #F8F8F8;
-        // border-bottom-color: #D26911;
+        // background: #F8F8F8;
+        // border-bottom-color: #3498DB;
+        // color: #2980B9;
     }
 }
 
@@ -1707,7 +1729,7 @@ figure.highlight,
     }
 }
 
-/* post navigator*/
+
 .post-nav {
       overflow: hidden;
       margin-top: 40px;
@@ -1735,19 +1757,21 @@ figure.highlight,
         overflow: hidden;
 
         span{
-          min-width: 120px;
+          min-width: 150px;
           text-align: center;
-          line-height: 25px;
+          line-height:30px;
           font-size: 15px;
           color: #555;
-          border-bottom: 1px solid #555;
+          border-bottom: 1px solid #ddd;
           float: left;
           margin: 40px 0;
-          padding: 3px;
+          padding: 5px 3px 4px 3px;
           background-color: #F8F8F8;
+          border-radius: 4px;
         }
         &.pre{
             float: left;
+            margin-right: 1em;
             span:before {
               font-family: "FontAwesome";
               content: "\f0d9";
@@ -1755,7 +1779,7 @@ figure.highlight,
             }
         }
         &.next {
-            float: right;
+            float: left;
             span:before {
               font-family: "FontAwesome";
               content: "\f0da";
@@ -1769,9 +1793,11 @@ figure.highlight,
         }
 
         i{
-          font-size: 90px;
+          img{
+            height: 120px;
+          }
           position: absolute;
-          line-height: 112px;
+          line-height: 120px;
           top: 0;
           left: 0;
           right: 0;

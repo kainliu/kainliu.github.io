@@ -3,11 +3,10 @@ title: Arguments and Interface in Javascript
 date: 2012-03-22
 tags:
 - javascript
-thumbnail: /images/worker-operating-the-gear_1156-569.jpg
+thumbnail: /images/app.png
 description: Some thoughts on designing Javascript function interface.
 categories:
 ---
-![Design by <a href='http://www.freepik.com/free-photo/worker-operating-the-gear_954804.htm'>Freepik</a>](/images/worker-operating-the-gear_1156-569.jpg)
 
 Let's start with a simple function `person`:
 

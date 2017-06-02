@@ -16,15 +16,22 @@ block content
         - contains_tag_of_notes = true
 
     if contains_tag_of_notes
-      div.post.index-post
+      div.post.index-post.pure-u-md-1-4.index-post-note
+        
+        .post-content
+          a(href=url_for(post.path))
+            +thumbnail(post)
         h3.post-title
           a(href=url_for(post.path))
             +title(post)
+        .post-desc
+            != "A note on <i>" + post.title + "</i>."
+
         div(class='readmore')
           a(href=url_for(post.path))= __('Readnote')
 
     else
-      div.post.index-post
+      div.post.index-post.pure-u-md-1-2
         //-
           h1.post-title
             include _partial/helpers
@@ -37,10 +44,10 @@ block content
             a.disqus-comment-count(data-disqus-identifier=post.path, href=url_for(post.path) + '#disqus_thread')
 
         // add thumbnail
-        if post.thumbnail
-          .post-content
-            a(href=url_for(post.path))
-              img(src= post.thumbnail, class='nofancybox')
+        .post-content
+          a(href=url_for(post.path))
+            +thumbnail(post)
+            
         h3.post-title
           a(href=url_for(post.path))
             +title(post)
@@ -75,3 +82,5 @@ block content
 
   if theme.disqus
     script(id='dsq-count-scr', src='//#{theme.disqus}.disqus.com/count.js', async)
+
+  

@@ -6,7 +6,7 @@ tags:
 - similarity
 - algorithm
 categories:
-thumbnail: /images/rainbow-colors-153229_960_720.png
+thumbnail: /images/image-search.png
 description: A tutorial on hashing-powered searching for nearest neighbors.
 mathjax: true
 ---
@@ -292,8 +292,12 @@ All the source codes, datasets, results and analysis are in the github repositor
   <img src="/images/prism-demo-3.png" width = "49%" alt="" style="float:left;clear:both"/><img src="/images/prism-demo-4.png" width = "49%" alt="" style="float:left"/>
 </div>
 
-As we seen from the above results, the nearest neighbors have similar colors with the given picture and basically fits the original idea.
+As we seen from the above results - nearest neighbors have similar colors - it basically fits our original idea.
 
-However, we find that this method will be highly influenced by the diversity of colors, for example, in the last graph the cups and the baseballs share large percentage of white colors and thus the method functions poorly. This shortcoming could be overcame by taking boundaries of the objects into account, which is called `contour detection` or `edge detection`.
+### Shortcomings
 
-<img src="/images/edge-detection.png" width = "50%" alt="Edge detection. From Mathworks.com" />
+However, this method is highly influenced by the diversity of colors. For example, in the last graph the cups and the baseballs share large percentage of white colors, and thus this method functions poorly. 
+
+To overcome this shortcoming, we can take boundaries of the objects into account. There are many popular algorithms in [contour/edge detection](https://en.wikipedia.org/wiki/Edge_detection) 
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/%C3%84%C3%A4retuvastuse_n%C3%A4ide.png/1000px-%C3%84%C3%A4retuvastuse_n%C3%A4ide.png" width = "50%" alt="Edge detection example. From wikipedia." />

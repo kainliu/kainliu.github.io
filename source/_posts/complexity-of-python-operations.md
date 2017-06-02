@@ -5,7 +5,7 @@ disqus: false
 tag:
 - complexity
 - python
-thumbnail: /images/complexity.jpg
+thumbnail: /images/justice-scale.png
 description: A clear and inspiring explanation by Richard Pattis.
 mathjax: true
 ---
