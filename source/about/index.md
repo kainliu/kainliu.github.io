@@ -4,7 +4,7 @@ date: 2017-03-31 13:27:10
 disqus: false
 ---
 
-<h1 style="text-align: center; margin: 40px 0; font-family: 'Imprima'">Hi, I am Kai.</h1>
+<h1 style="text-align: center; margin: 40px 0; font-family: 'Asar'">Hi, I am Kai.</h1>
 
 Lucky to witness the fast growth of internet, at the same time, I'm eager to contribute.  In high school, I already made my decision to take a poistion in this industry. The times when people highly doubted the future of internet and computers, I never hold a second thought - it is the future.
 
