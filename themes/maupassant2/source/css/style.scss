@@ -79,10 +79,10 @@ div {
         #logo {
             // font: bold 38px/1.12 "Times New Roman", Georgia, Times, sans-serif;
             font: normal 25px/1.1 "Asar","Times New Roman", Georgia, Times, sans-serif;
-            color: #555;
-            span, &:hover {
-                color: #777;
-            }
+            color: #000;
+            // span, &:hover {
+            //     color: #000;
+            // }
         }
         .description {
             margin: .2em 0 0;
@@ -230,6 +230,7 @@ div {
   }
   .post-desc {
     /*border-top: 1px solid #ddd;*/
+    
     font-size: 14px !important;
     line-height: 1.5em !important;
     font-weight: normal;
@@ -247,11 +248,11 @@ div {
     }
   }
   .readmore{
-    margin-top: 10px;
-    line-height: 30px;
+    margin-top: 20px;
   }
   .readmore a{
     padding: 9px 15px;
+    line-height: 30px;
     font-size: 12px;
     border-bottom: 1px solid #DDDDDD;
     border-radius: 4px;
@@ -262,6 +263,7 @@ div {
 .tagcloud{
   margin: 20px 0;
   a {
+    font-family: 'Imprima', sans-serif;
     border-bottom: 1px solid #DDDDDD;
     margin-right: 5px;
     margin-bottom: 10px;
@@ -283,13 +285,15 @@ div {
         margin: 0;
         // color: #555;
         text-align: left;
-        font: bold 25px/1.1 "Asar","Times New Roman", Georgia, Times, sans-serif;
+        font: bold 25px/1.1 "Asar", "Times New Roman", Georgia, Times, sans-serif;
         a {
             color: #555;
         }
     }
     .post-desc {
         // font: 18px/1.1 "Asar","Times New Roman", Georgia, Times, sans-serif;
+        font-family: 'Imprima', sans-serif;
+        line-height: 1.3em;
     }
     .post-meta {
         padding: 0;
@@ -436,11 +440,12 @@ div {
     .tags {
         margin: 15px 0;
         a {
+            font-family: 'Imprima', sans-serif;
             margin-right: .5em;
             background-color: #f7f8f8;
             border-bottom: 1px solid #DDDDDD;
             // color: #000;
-            padding: 2px 5px;
+            padding: 3px 5px;
             border-radius: 3px;
             text-transform: capitalize;
             &:before {
@@ -552,7 +557,7 @@ div {
             position: relative;
             text-align: center;
             a {
-                padding: 0 15px;
+                padding: 5px 15px;
                 line-height: 27px;
                 height: 27px;
                 font-size: 18px;
@@ -1755,6 +1760,7 @@ figure.highlight,
         max-width: 100%;
         position: relative;
         overflow: hidden;
+        margin-bottom: 10px;
 
         span{
           min-width: 150px;
@@ -1765,7 +1771,7 @@ figure.highlight,
           border-bottom: 1px solid #ddd;
           float: left;
           margin: 40px 0;
-          padding: 5px 3px 4px 3px;
+          padding: 5px 6px 4px 6px;
           background-color: #F8F8F8;
           border-radius: 4px;
         }
