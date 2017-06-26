@@ -12,12 +12,14 @@ block content
   .post
 
     if page.category || page.tag
-      h1.label-title=  __('reading_label', page.category || page.tag)
+      - var labelContent = page.category || page.tag
+      - labelContent = labelContent.charAt(0).toUpperCase() + labelContent.slice(1);
+      h1.label-title=  __('reading_label', labelContent)
       br
       br
     else
       .post-archive
-        h2!= "Tag Clouds"
+        h2!= "Tags"
       .tagcloud
         != tagcloud({min_font: 12, max_font: 22, amount: 100, orderby: 'count'})
 

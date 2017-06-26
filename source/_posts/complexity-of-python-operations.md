@@ -10,9 +10,8 @@ description: A clear and inspiring explanation by Richard Pattis.
 mathjax: true
 ---
 
-In this article, the explanation of computing complexity of Python operations is clear and inspiring.
-I really like the way it analyze problems, especially the section [Priority Queue](#Priority-Queue).
-So I reformat this text file in markdown as follows.
+This article [`Complexity of Python Operations`](https://www.ics.uci.edu/~pattis/ICS-33/lectures/complexitypython.txt) has a clear and inspiring explanation of complexity of Python operations.
+I really like the way it analyze problems, especially the section for [Priority Queue](#Priority-Queue). I reformat the whole article to Markdown as follows.
 
 
 ------------------------------------------------------------------------------
@@ -25,30 +24,30 @@ Original Link: <https://www.ics.uci.edu/~pattis/ICS-33/lectures/complexitypython
 
 ------------------------------------------------------------------------------
 
-In this lecture we will learn the complexity classes of various operations on Python data types. Then we wil learn how to combine these complexity classes to compute the complexity class of all the code in a function, and therefore the complexity class of the function. This is called "static" analysis, because we do not need to run any code to perform it (contrasted with Dynamic or Emperical Analysis, when we do run code and take measurements).
+In this lecture we will learn the complexity classes of various operations on Python data types. Then we will learn how to combine these complexity classes to compute the complexity class of all the code in a function, and therefore the complexity class of the function. This is called "static" analysis, because we do not need to run any code to perform it (contrasted with Dynamic or Empirical Analysis, when we do run code and take measurements).
 
 ### Python Complexity Classes
 
-In ICS-46 we will write low-level implementations of all of Python's data types and see/understand WHY these complexity classes apply. For now we just need to try to absorb (not memorize) this information, with some -but minimal- justification.
+In [ICS-46](http://www.ics.uci.edu/~thornton/ics46/Notes/) we will write low-level implementations of all of Python's data types and see/understand WHY these complexity classes apply. For now we just need to try to absorb (not memorize) this information, with some -but minimal- justification.
 
-Binding a value to any name (copying a reference) is O(1). Simple operators on integers (whose values are small: e.g., under 12 digits) like + or == are also O(1).
+Binding a value to any name (copying a reference) is `O(1)`. Simple operators on integers (whose values are small: e.g., under 12 digits) like `+` or `==` are also `O(1)`.
 
 In all these examples, `N = len(data-type)`. The operations are organized by increasing complexity.
 
-Lists:
+#### Lists:
 
 | Operation    | Example      | Complexity Class | Notes |
-|--------------|--------------|------------|------|
+|--------------|--------------|------------------|-------|
 |Index         | l[i]         | O(1)	     |             |
 |Store         | l[i] = 0     | O(1)	     |             |
 |Length        | len(l)       | O(1)	     |             |
 |Append        | l.append(5)  | O(1)	     |             |
 |Pop	         | l.pop()      | O(1)	     | same as l.pop(-1), popping at end |
 |Clear         | l.clear()    | O(1)	     | similar to l = [] |
-|Slice         | l[a:b]       | O(b-a)	     | l[1:5]:O(l)/l[:]:O(len(l)-0)=O(N) |
-|Extend        | l.extend(...)| O(len(...))   | depends only on len of extension |
-|Construction  | list(...)    | O(len(...))   | depends on length of ...         |
-|check ==, !=  | l1 == l2     | O(N)          |             |
+|Slice         | l[a:b]       | O(b-a)	   | l[1:5] : O(1) <br/> l[:] : O(len(l)-0)=O(N) |
+|Extend        | l.extend(...)| O(len(...))| depends only on len of extension |
+|Construction  | list(...)    | O(len(...))| depends on length of ...         |
+|check ==, !=  | l1 == l2     | O(N)       |             |
 |Insert        | l[a:b] = ... | O(N)	     |             |
 |Delete        | del l[i]     | O(N)	     |             |
 |Remove        | l.remove(...)| O(N)	     |             |
@@ -56,39 +55,36 @@ Lists:
 |Copy          | l.copy()     | O(N)	     | Same as l[:] which is O(N) |
 |Pop	         | l.pop(i)     | O(N)	     | O(N-i): l.pop(0):O(N) (see above) |
 |Extreme value | min(l)/max(l)| O(N)	     | searches list |
-|Reverse	     | l.reverse()  | O(N)	        |             |
-|Iteration     | for v in l:  | O(N)          |             |
-|Sort          | l.sort()     | O(N Log N)    | key/reverse mostly doesn't change |
-|Multiply      | k\*l          | O(k N)        | 5\*l is O(N): len(l)*l is O($N^2$) |
+|Reverse	     | l.reverse()  | O(N)	     |             |
+|Iteration     | for v in l:  | O(N)       |             |
+|Sort          | l.sort()     | O(N Log N) | key/reverse mostly doesn't change |
+|Multiply      | k\*l         | O(k N)     | 5\*l is O(N): len(l)*l is O($N^2$) |
 
 Tuples support all operations that do not mutate the data structure (and with
 the same complexity classes).
 
 
-Sets:
-                               Complexity
-Operation     | Example      | Class         | Notes
---------------+--------------+---------------+-------------------------------
-Length        | len(s)       | O(1)	     |
-Add           | s.add(5)     | O(1)	     |
-Containment   | x in/not in s| O(1)	     | compare to list/tuple - O(N)
-Remove        | s.remove(5)  | O(1)	     | compare to list/tuple - O(N)
-Discard       | s.discard(5) | O(1)	     |
-Pop           | s.pop(i)     | O(1)	     | compare to list - O(N)
-Clear         | s.clear()    | O(1)	     | similar to s = set()
+#### Sets:
 
-Construction  | set(...)     | O(len(...))   | depends on length of ...
-check ==, !=  | s != t       | O(len(s))     | same as len(t): False in O(1) if
-      	      	     	       		       the lengths are different
-<=/<          | s <= t       | O(len(s))     | issubset
->=/>          | s >= t       | O(len(t))     | issuperset s <= t == t >= s
-Union         | s | t        | O(len(s)+len(t))
-Intersection  | s & t        | O(len(s)+len(t))
-Difference    | s - t        | O(len(s)+len(t))
-Symmetric Diff| s ^ t        | O(len(s)+len(t))
-
-Iteration     | for v in s:  | O(N)          |
-Copy          | s.copy()     | O(N)	     |
+| Operation    | Example      | Complexity Class | Notes |
+|--------------|--------------|------------------|-------|
+|Length        | len(s)       | O(1)	     |             |
+|Add           | s.add(5)     | O(1)	     |             |
+|Containment   | x in/not in s| O(1)	     | compare to list/tuple - O(N) |
+|Remove        | s.remove(5)  | O(1)	     | compare to list/tuple - O(N) |
+|Discard       | s.discard(5) | O(1)	     |             |
+|Pop           | s.pop(i)     | O(1)	     | compare to list - O(N) |
+|Clear         | s.clear()    | O(1)	     | similar to s = set()   |
+|Construction  | set(...)     | O(len(...))   | depends on length of ... |
+|check ==, !=  | s != t       | O(len(s))     | same as len(t): False in O(1) if the lengths are different |
+|<=/<          | s <= t       | O(len(s))     | issubset             |
+|>=/>          | s >= t       | O(len(t))     | issuperset s <= t == t >= s |
+|Union         | s | t        | O(len(s)+len(t)) |              |
+|Intersection  | s & t        | O(len(s)+len(t)) |              |
+|Difference    | s - t        | O(len(s)+len(t)) |              |
+|Symmetric Diff| s ^ t        | O(len(s)+len(t)) |              |
+|Iteration     | for v in s:  | O(N)          |             |
+|Copy          | s.copy()     | O(N)	     |             |
 
 Sets have many more operations that are O(1) compared with lists and tuples.
 Not needing to keep values in a specific order (which lists/tuples require)
@@ -98,23 +94,21 @@ Frozen sets support all operations that do not mutate the data structure (and
 with the same complexity classes).
 
 
-Dictionaries: dict and defaultdict
-                               Complexity
-Operation     | Example      | Class         | Notes
---------------+--------------+---------------+-------------------------------
-Index         | d[k]         | O(1)	     |
-Store         | d[k] = v     | O(1)	     |
-Length        | len(d)       | O(1)	     |
-Delete        | del d[k]     | O(1)	     |
-get/setdefault| d.method     | O(1)	     |
-Pop           | d.pop(k)     | O(1)	     |
-Pop item      | d.popitem()  | O(1)	     |
-Clear         | d.clear()    | O(1)	     | similar to s = {} or = dict()
-View          | d.keys()     | O(1)	     | same for d.values()
+#### Dictionaries: dict and defaultdict
 
-Construction  | dict(...)    | O(len(...))   | depends # (key,value) 2-tuples
-
-Iteration     | for k in d:  | O(N)          | all forms: keys, values, items
+| Operation    | Example      | Complexity Class | Notes |
+|--------------|--------------|------------------|-------|
+|Index         | d[k]         | O(1)	     |             |
+|Store         | d[k] = v     | O(1)	     |             |
+|Length        | len(d)       | O(1)	     |             |
+|Delete        | del d[k]     | O(1)	     |             |
+|get/setdefault| d.method     | O(1)	     |             |
+|Pop           | d.pop(k)     | O(1)	     |             |
+|Pop item      | d.popitem()  | O(1)	     |             |
+|Clear         | d.clear()    | O(1)	     | similar to s = {} or = dict()  |
+|View          | d.keys()     | O(1)	     | same for d.values()            |
+|Construction  | dict(...)    | O(len(...))| depends # (key,value) 2-tuples |
+|Iteration     | for k in d:  | O(N)       | all forms: keys, values, items |
 
 So, most dict operations are O(1).
 
@@ -145,17 +139,17 @@ is O(1).
 
 ------------------------------------------------------------------------------
 
-Composing Complexity Classes: Sequential and Nested Statements
+### Composing Complexity Classes: Sequential and Nested Statements
 
 In this section we will learn how to combine complexity class information about
 simple operations into complexity information about complex operations
 (composed from simple operations). The goal is to be able to analyze all the
-statements in a functon/method to determine the complexity class of executing
+statements in a function/method to determine the complexity class of executing
 the function/method.
 
 ------------------------------------------------------------------------------
 
-Law of Addition for big-O notation
+### Law of Addition for big-O notation
 
  O(f(n)) + O(g(n)) is O( f(n) + g(n) )
 
@@ -169,7 +163,7 @@ because N is the faster growing function.
 
 This rule helps us understand how to compute the complexity of doing some
 SEQUENCE of operations: executing a statement that is O(f(n)) followed by
-executing a statement that is O(g(n)). Executing both statements SEQUENTAILLY
+executing a statement that is O(g(n)). Executing both statements SEQUENTIALLY
 is O(f(n)) + O(g(n)) which is O( f(n) + g(n) ) by the rule above.
 
 For example, if some function call f(...) is O(N) and another function call
@@ -186,7 +180,7 @@ sequence (calling f twice)
 
 is O(N) + O(N) which is O(N + N) which is O(2N) which is O(N).
 
-Note that for an if statment like
+Note that for an if statement like
 
   if test:    	 assume complexity of test is O(T)
      block 1     assume complexity of block 1 is O(B1)
@@ -209,7 +203,7 @@ O(N**3) + O(N**2) = O(N**3 + N**2) = O(N**3).
 
 ------------------------------------------------------------------------------
 
-Law of Multiplcation for big-O notation
+### Law of Multiplcation for big-O notation
 
  O(f(n)) * O(g(n)) is O( f(n) * g(n) )
 
@@ -241,11 +235,13 @@ will assume in all three examples that len(alist) is N.
 later indexes: alist[i+1:] is a list containing all values after the one at
 index i.
 
+```python
 def is_unique1 (alist : [int]) -> bool:
     for i in range(len(alist)):		O(N)
         if alist[i] in alist[i+1:]:	O(N) - index+add+slice+in: O(1)+O(1)+O(N)+O(N) = O(N)
             return False		O(1) - never executed in worst case
     return True				O(1)
+```
 
 The complexity class for executing the entire function is O(N) * O(N) + O(1)
 = O(N**2). So we know from the previous lecture that if we double the length of

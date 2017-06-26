@@ -10,17 +10,39 @@ tag:
 
 With three examples I summarize the usage of `promise`:
 
-1. `workSequentially`
-  - sends requests and show responses one by one.
-  - `array.reduce` is promise-compatible.
-  - `array.forEach` is not promise-compatible.
-2. `workParallelly`
-  - sends all requests in parallel, and will show responses when all of them arrive.
-  - `Promise.all`
-  - `array.map`
-3. `workParallellyWithReduce` / `workParallellyWithPromiseAll`
-  - send all requests, but responses are shown as soon as they arrived.
-  - improve user experience by showing contents according to their priorities ( [Google Developers](https://developers.google.com/web/fundamentals/getting-started/primers/promises#parallelism_and_sequencing_getting_the_best_of_both) ).
+
+| Name    | Notes      | Flow Chart |
+|--------------|--------------|------------------|
+|`work` as baseline| <li> send a request then display the response, until all the requests are done. <li> `array.reduce` is promise-compatible while `array.forEach` is not promise-compatible.| ![](/images/promise-0.png)|
+| `workInParallel` | <li> sends all requests in parallel, and display responses when all of them arrive. <li>  use `Promise.all` and `array.map`. | ![](/images/promise-1.png)|
+| `workInParallel2` | <li> based on `workInParallel` <li> send all requests, but responses are shown AS SOON AS they arrived. | ![](/images/promise-2.png)|
+| `workInParallelAndSequence` | <li> showing contents according to their priorities. important content is required before showing the trivial blocks.  <li> improve user experience([Google Developers](https://developers.google.com/web/fundamentals/getting-started/primers/promises#parallelism_and_sequencing_getting_the_best_of_both)) | ![](/images/promise-3.png)|
+
+
+### work
+```javascript
+function work(arr) {
+  let final = []
+  // arr.reduce(`callback`, `[initialValue]`)
+  // - `callback`
+  //    - `promise` : the sequence of promise
+  //    - `item`    : the item in the array
+  // - `[initialValue]`: the initial state of promise sequence
+  return arr.reduce((promise, item) => {
+    return promise.then(result => {
+      console.log(`A RESULT: ${result}`)
+      return asyncRequest(item).then(result => {
+        console.log(`B RESULT: ${result}`)
+        final.push(result)
+        return result
+      })
+    })
+  }, Promise.resolve(0))
+  // when the last request arrives, show all the results together
+  .then(() => console.log(`FINAL R.: ${final}`))
+}
+
+```
 
 ### asyncRequest
 ```javascript
@@ -30,62 +52,36 @@ function asyncRequest(e) {
   return new Promise((resolve, reject) => {
     setTimeout(
       () => resolve(e),
+      // the time delay is `e` second(s).
       1000 * e
     );
   });
 }
 ```
 
-### workSequentially
 ```javascript
-function workSequentially(arr) {
-  let final = []
-  // arr.reduce(`callback`, `[initialValue]`)
-  // - `callback`
-  //    - `promise` : the sequence of promise
-  //    - `item`    : the item in the array
-  // - `[initialValue]`: the initial state of promise sequence
-  return arr.reduce((promise, item) => {
-    return promise.then(result => {
-      console.log(`A: result ${result}`)
-      return asyncRequest(item).then(result => {
-        console.log(`B: result ${result}`)
-        final.push(result)
-        return result
-      })
-    })
-  }, Promise.resolve(0))
-  // when the last request arrives, show all the results together
-  .then(() => console.log(`FINAL RESULT: ${final}`))
-}
+> work([1,2,3])
 
-```
-
-As we seen from the console outputs, the responses arrive in the same order as the promises that we passed in.
-
-```javascript
-> workSequentially([1,2,3])
-
-A: result 0     // the initial promise value
+A RESULT: 0     // the initial promise value
 Promise {[[PromiseStatus]]: "pending", [[PromiseValue]]: undefined}
                 // 1s later
-B: result 1     
-A: result 1
+B RESULT: 1     
+A RESULT: 1
                 // 2s later
-B: result 2    
-A: result 2
+B RESULT: 2    
+A RESULT: 2
                 // 3s later
-B: result 3   
-FINAL RESULT: 1,2,3
+B RESULT: 3   
+FINAL R.: 1,2,3
 ```
 
 
-### workParallelly
+### workInParallel
 
 ```javascript
-function workParallelly(arr){
+function workInParallel(arr){
   return Promise.all(arr.map(asyncRequest))
-    .then(final => console.log(`FINAL RESULT: ${final}`))
+    .then(final => console.log(`FINAL R.: ${final}`))
 }
 ```
 
@@ -94,135 +90,127 @@ Then, `Promise.all` takes an array of promises, and create a promise that fulfil
 
 
 ```javascript
-> workParallelly([1,2,3])
+> workInParallel([1,2,3])
 
 Promise {[[PromiseStatus]]: "pending", [[PromiseValue]]: undefined}
                 // 3s later
-FINAL RESULT: 1,2,3
+FINAL R.: 1,2,3
 ```
 
 ```javascript
-> workParallelly([1,3,2])
+> workInParallel([1,3,2])
 Promise {[[PromiseStatus]]: "pending", [[PromiseValue]]: undefined}
                 // 3s later
-FINAL RESULT: 1,3,2
+FINAL R.: 1,3,2
 
 ```
-Passing `[1,2,3]` and `[1,3,2]` to the parallel function, both cost 3 seconds to fulfill, and the order remains in the final result.
+Passing `[1,2,3]` and `[1,3,2]` to the parallel function, both of them cost 3 seconds to fulfill, and the order remains in the final result.
 `Promise.all` ensures results in the same order as the promises we passed in.
 
+### workInParallel2
 
-### workParallellyWithReduce
+By extending `Promise.all` method as follows, each response can be displayed as soon as it arrives.
 
 ```javascript
-function workParallellyWithReduce(arr) {
+function workInParallel2(arr) {
+  return Promise.all(arr.map(result => {
+    // init the requests
+    console.log(`A RESULT: ${result}`)
+    return asyncRequest(result).then(result => {
+      // display the result as soon as it arrives
+      console.log(`B RESULT: ${result}`)
+      return result
+    })
+  }))
+  // when all responses arrive show final results
+  .then(final => console.log(`FINAL R.: ${final}`))
+}
+```
+
+```javascript
+> workInParallel2([1,2,3])
+
+A RESULT: 1
+A RESULT: 2
+A RESULT: 3
+Promise {[[PromiseStatus]]: "pending", [[PromiseValue]]: undefined}
+              // 1s later
+B RESULT: 1
+              // 1s later
+B RESULT: 2
+              // 1s later
+B RESULT: 3
+FINAL R.: 1,2,3
+```
+
+
+
+### workInParallelAndSequence
+
+```javascript
+function workInParallelAndSequence(arr) {
   let final = []
 
   return arr.map(asyncRequest)
     .reduce((promise, item) => {
-      return promise.then( (result) => {
-        console.log(`A: result ${result}`)
+      return promise.then( result => {
+        console.log(`A RESULT: ${result}`)
         return item
       })
       .then( result => {
-        console.log(`B: result ${result}`)
+        console.log(`B RESULT: ${result}`)
         final.push(result)
         return result
       })
     }, Promise.resolve(0))
     // when all responses arrive, show the result
-    .then(() => console.log(`FINAL RESULT: ${final}`))
+    .then(() => console.log(`FINAL R.: ${final}`))
 }
 ```
 
 
 ```javascript
-> workParallellyWithReduce([1,2,3])
+> workInParallelAndSequence([1,2,3])
 
-A: result 0
+A RESULT: 0
 Promise {[[PromiseStatus]]: "pending", [[PromiseValue]]: undefined}
               // 1s later
-B: result 1
-A: result 1
+B RESULT: 1
+A RESULT: 1
               // 1s later
-B: result 2
-A: result 2
+B RESULT: 2
+A RESULT: 2
               // 1s later
-B: result 3
-FINAL RESULT: 1,2,3
+B RESULT: 3
+FINAL R.: 1,2,3
 ```
 
+Let's assume one of the content wither a higher priority, for example, the main body of the web page, should be displayed before the sidebar widgets.
 
 ```javascript
-> workParallellyWithReduce([1,3,2])
-
-A: result 0
-Promise {[[PromiseStatus]]: "pending", [[PromiseValue]]: undefined}
-              // 1s later
-B: result 1
-A: result 1
-              // 2s later
-B: result 3
-A: result 3
-B: result 2
-FINAL RESULT: 1,3,2
+[
+ 1, // header takes 1 second
+ 3, // main body takes 3 seconds
+ 2  // sidebar takes 2 seconds
+]
 ```
-
-If we pass `[1,3,2]`, there is no delay between the console output of `3` and `2`, which means the response of `2` is being held while request of `3` is still on the fly.
-The function forces the sequence of showing the results.
 We can apply this in certain scenarios when the main content (feed, article, etc.) is required to show before all less important contents (sidebar, ads, etc.).
 
-
-## workParallellyWithPromiseAll
-
-The same functionality of `workParallellyWithReduce` can be achieved by extending `Promise.all` method as follows,
+We would like to take full advantage of `promise` parallelism and keep the sequencing.
 
 ```javascript
-function workParallellyWithPromiseAll(arr) {
-  return Promise.all(arr.map(result => {
-    // init the requests
-    console.log(`A: result ${result}`)
-    return asyncRequest(result).then(result => {
-      // use the result as soon as it arrives
-      console.log(`B: result ${result}`)
-      return result
-    })
-  }))
-  // when all responses arrive, show the result
-  .then(final => console.log(`FINAL RESULT: ${final}`))
-}
-```
+> workInParallelAndSequence([1,3,2])
 
-```javascript
-> workParallellyWithPromiseAll([1,2,3])
-
-A: result 1
-A: result 2
-A: result 3
+A RESULT: 0
 Promise {[[PromiseStatus]]: "pending", [[PromiseValue]]: undefined}
               // 1s later
-B: result 1
-              // 1s later
-B: result 2
-              // 1s later
-B: result 3
-FINAL RESULT: 1,2,3
+B RESULT: 1
+A RESULT: 1
+              // 2s later
+B RESULT: 3
+A RESULT: 3
+B RESULT: 2
+FINAL R.: 1,3,2
 ```
 
-```javascript
-> workParallellyWithPromiseAll([1,3,2])
-
-A: result 1
-A: result 3
-A: result 2
-Promise {[[PromiseStatus]]: "pending", [[PromiseValue]]: undefined}
-              // 1s later
-B: result 1
-              // 1s later
-B: result 2
-              // 1s later
-B: result 3
-FINAL RESULT: 1,3,2
-```
-
-`workParallellyWithPromiseAll` outputs the result as soon as corresponding response arrives, and also keeps the order of promises.
+As seen from the console, there is no delay between the output of `3` and `2`, which means the response of `2` was being held while response of `3` was on the fly. The function forces the sequence of showing the results.

@@ -17,7 +17,7 @@ It starts when I play with the javascript source codes of `Google Translate`. Th
 ```javascript
 Math.floor(2147483648 * Math.random()).toString(36);
 ```
-which generates a random 6-character string, e.g. `"2qa2xe"`.
+which generates a random 6-character string, e.g. `2qa2xe`.
 
 1. `Math.toString()`
 
@@ -36,7 +36,7 @@ which generates a random 6-character string, e.g. `"2qa2xe"`.
     ```javascript
     Math.floor(2147483648 * Math.random())
     ```
-    returns an integer between $[0, 2147483648)$. The 'largest' string is `"zik0zj"`.
+    returns an integer between $[0, 2147483648)$. The 'largest' string is `zik0zj`.
 
 So in my opinion, this line is used as a light-weight random string generator, which could be used to identify the users or sessions.
 
