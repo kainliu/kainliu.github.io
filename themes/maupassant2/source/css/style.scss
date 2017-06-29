@@ -15,14 +15,14 @@ specific font stacks to ensure the greatest OS/browser compatibility.
 html, button, input, select, textarea,
 .pure-g [class *= "pure-u"] {
     /* Set your content font stack here: */
-    font-family: /*"PingFangSC-Regular",*/ "Helvetica Neue", Helvetica,  "Segoe UI",
+    font-family: /*"PingFangSC-Regular",*/"Lucida Grande", "Helvetica Neue", Helvetica,  "Segoe UI",
                  "Hiragino Sans GB", "Source Han Sans CN", "Microsoft YaHei", "STHeiti", "WenQuanYi Micro Hei", sans-serif;
 }
 
 body {
     background-color: #ffffff;
     color: #444444;
-    font-family: "Helvetica Neue", Arial, "Hiragino Sans GB", "STHeiti", "Microsoft YaHei", "WenQuanYi Micro Hei", SimSun, sans-serif;
+    font-family: "Lucida Grande", "Helvetica Neue", Arial, "Hiragino Sans GB", "STHeiti", "Microsoft YaHei", "WenQuanYi Micro Hei", SimSun, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-size: 14px;
@@ -254,7 +254,7 @@ div {
     padding: 0px !important;
     text-align: center !important;
     img{
-      height: 160px;
+      height: 140px;
     }
   }
   .readmore{
@@ -393,16 +393,17 @@ div {
         pre code {
             padding: 0 2em;
         }
+        code {
+            font-family: Menlo, Consolas, monospace;
+            font-size: 0.9em;
+            display: inline-block;
+            margin: 0 0px;
+            padding: 0 3px;
+            background: #f7f8f8;
+        }
         p {
             margin: 0 0 1.234em;
-            code {
-                font-family: Menlo, Consolas, monospace;
-                font-size: 0.9em;
-                display: inline-block;
-                margin: 0 5px;
-                padding: 0 5px;
-                background: #f7f8f8;
-            }
+
             a {
                 color: #01579f;
                 padding-bottom: 2px;
@@ -573,6 +574,7 @@ div {
         #nav-menu {
             position: relative;
             text-align: center;
+            margin-top: 2em;
             a {
                 padding: 5px 15px;
                 line-height: 27px;

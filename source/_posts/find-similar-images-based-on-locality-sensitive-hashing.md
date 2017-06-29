@@ -15,7 +15,7 @@ Let's start with the distribution of colors in a picture.
 
 The color distribution reflects how the pixels are colored. In the space of `RGB`(red, green, blue), each pixel is represented by 24 bits (8 bits for red, 8 for green and 8 for blue). For example, given 8 bits to describe how red it is, there are 256 ($2^8$) different variations. In total, there are 16,777,216 ($256^3$) different kinds of `RGB` combinations, which already reaches [the limit of human eyes](https://en.wikipedia.org/wiki/Color_depth#True_color_.2824-bit.29).
 
-![A parrot on a tree. The right side is the RGB(red, green, blue) distribution.](https://raw.githubusercontent.com/kainliu/Prism/master/screenshot/bird.png)
+![A parrot on a tree. The right side is the RGB(red, green, blue) distribution.](https://raw.githubusercontent.com/kainliu/Prism/master/screenshot/bird.png?width=50)
 
 To find similar images, the basic idea is that **similar images share similar color distributions**. To quantify similarities, it's straightforward to make use of pixel counts to build up the profiles, which we call `signatures`.
 
@@ -76,14 +76,14 @@ If consider the signatures as 64-dimensional vectors, we could use `Cosine Simil
 
 `Locality Sensitive Hashing` (LSH) is an algorithm for searching near neighbors in high dimensional spaces. The core idea is to hash similar items into the same bucket. We will walk through the process of applying **LSH for Cosine Similarity**, with the help of the following plots from [Benjamin Van Durme & Ashwin Lall, ACL2010](http://www.cs.jhu.edu/~vandurme/papers/VanDurmeLallACL10-slides.pdf), with a few modifications by me.
 
-![Figure 1. Cosine Similarity LSH.](/images/cos-lsh-1.png)
+![Figure 1. Cosine Similarity LSH.](/images/cos-lsh-1.png?width=50)
 
 1. In the Figure 1, there are two data points in red and yellow, representing two-dimensional data points. We are trying to find their cosine similarity using LSH.
 2. The gray lines are randomly picked planes. Depending on whether the data point locates above or below a gray line, we mark this result as $1$ (above the line, in white) or $0$ (below the line, in black).
 3. On the upper-left corner, there are two rows of white/black squares, representing the results of the two data points respectively.
 
 
-![Figure 2. Cosine Similarity LSH.](/images/cos-lsh-2.png)
+![Figure 2. Cosine Similarity LSH.](/images/cos-lsh-2.png?width=50)
 
 1. As in the example, we use 6 planes, and thus use 6 bits to represent each data. The length of sketch $b = 6$.
 2. The hamming distance between the two hashed value $h = 1$.
@@ -266,7 +266,7 @@ Tuning parameters to find the optimum balance between accuracy and efficiency is
 
 For example, in general, the `r-squared` of sketch similarity and signature similarity rises with number of vectors. More random vectors can provide better estimation of the similarity, but at the same time cost more time and memory. Thus experiments are carried out as follows:
 
-![Experiments of tuning the number of random vectors. ](https://raw.githubusercontent.com/kainliu/Prism/master/screenshot/vectors-n.jpg)
+![Experiments of tuning the number of random vectors. ](https://raw.githubusercontent.com/kainliu/Prism/master/screenshot/vectors-n.jpg?width=60)
 
 From the above graphs, we can select $k=256$ to get a r-squared greater than $0.9$ while keeping efficiency.
 
@@ -278,26 +278,32 @@ It contains not only the implementation of above algorithms, also uses a dataset
 
 All the source codes, datasets, results and analysis are in the github repository [github.com/kainliu/Prism](https://github.com/kainliu/Prism).
 
+| 1    | 2      |
+|--------------|--------------|
+|![Prism provides a web-based interface presenting the process.](https://github.com/kainliu/Prism/raw/master/screenshot/prism-page-001.jpg) | ![The signature of the chosen picture will be plotted.](https://github.com/kainliu/Prism/raw/master/screenshot/prism-page-002.jpg)|
 
-![Prism provides a web-based interface presenting the process.](https://github.com/kainliu/Prism/raw/master/screenshot/prism-page-001.jpg)
-![The signature of the chosen picture will be plotted.](https://github.com/kainliu/Prism/raw/master/screenshot/prism-page-002.jpg)
-![The sketch is plotted in a fan chart. ](https://github.com/kainliu/Prism/raw/master/screenshot/prism-page-003.jpg)
-![The nearest neighbors of chosen picture.](https://raw.githubusercontent.com/kainliu/Prism/master/screenshot/prism-page-004.jpg)
+| 3    | 4      |
+|--------------|--------------|
+|![The sketch is plotted in a fan chart. ](https://github.com/kainliu/Prism/raw/master/screenshot/prism-page-003.jpg) |![The nearest neighbors of chosen picture.](https://raw.githubusercontent.com/kainliu/Prism/master/screenshot/prism-page-004.jpg) |
 
+
+## Experiements
+| 1    | 2      |
+|--------------|--------------|
+|![](/images/prism-demo-1.png)|![](/images/prism-demo-2.png)|
+
+| 3    | 4      |
+|--------------|--------------|
+|![](/images/prism-demo-3.png)|![](/images/prism-demo-4.png)|
+
+As we seen from the above results - nearest neighbors have similar colors - which basically fits our original idea.
 
 ## Wrapping Up
 
-<div style="clear:both;overflow:hidden">
-  <img src="/images/prism-demo-1.png" width = "49%" alt="" style="float:left"/><img src="/images/prism-demo-2.png" width = "49%" alt="" style="float:left"/>
-  <img src="/images/prism-demo-3.png" width = "49%" alt="" style="float:left;clear:both"/><img src="/images/prism-demo-4.png" width = "49%" alt="" style="float:left"/>
-</div>
+Built on handcrafted codes, it's a good start for me, to try an idea to push an idea into a viable tool.
 
-As we seen from the above results - nearest neighbors have similar colors - it basically fits our original idea.
+However, this method is highly influenced by the diversity of colors. For example, the 4th experiment mixed the pictures of white cups with the baseballs, since they share a large percentage of similar white colors.
 
-### Shortcomings
-
-However, this method is highly influenced by the diversity of colors. For example, in the last graph the cups and the baseballs share large percentage of white colors, and thus this method functions poorly. 
-
-To overcome this shortcoming, we can take boundaries of the objects into account. There are many popular algorithms in [contour/edge detection](https://en.wikipedia.org/wiki/Edge_detection) 
+To overcome this shortcoming, an idea is to take boundaries of the objects into account. There are many popular algorithms in [contour/edge detection](https://en.wikipedia.org/wiki/Edge_detection)
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/%C3%84%C3%A4retuvastuse_n%C3%A4ide.png/1000px-%C3%84%C3%A4retuvastuse_n%C3%A4ide.png" width = "50%" alt="Edge detection example. From wikipedia." />
