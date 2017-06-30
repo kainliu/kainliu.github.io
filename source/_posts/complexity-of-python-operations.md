@@ -1,7 +1,6 @@
 ---
 title: Complexity of Python Operations
 date: 2017-05-21 14:00:10
-disqus: false
 tag:
 - complexity
 - python
@@ -10,8 +9,8 @@ description: A clear and inspiring explanation by Richard Pattis.
 mathjax: true
 ---
 
-This article [`Complexity of Python Operations`](https://www.ics.uci.edu/~pattis/ICS-33/lectures/complexitypython.txt) has a clear and inspiring explanation of complexity of Python operations.
-I really like the way it analyze problems, especially the section for [Priority Queue](#Priority-Queue). I reformat the whole article to Markdown as follows.
+This article [`Complexity of Python Operations`](https://www.ics.uci.edu/~pattis/ICS-33/lectures/complexitypython.txt) has a clear and inspiring explanation of computation complexity.
+I really like the way it analyses problems, especially the section for [Priority Queue](#Priority-Queue). I reformat the whole article to Markdown as follows.
 
 
 ------------------------------------------------------------------------------
@@ -243,7 +242,7 @@ Looked at another way if
 $T(N) = c\*(N Log N)$
 
 then,
-$T(2N) = c\*(2N Log 2N) = c\*2N\*(Log N + 1) = c\*2N Log N + c\*2N = 2\*T(N) + c\*2N$
+$T(2N) = c\*(2N Log 2N)$ = $c\*2N\*(Log N + 1)$ = $c\*2N Log N + c\*2N$ = $2\*T(N) + c\*2N$
 
 Or, computing the doubling signature
 
@@ -301,11 +300,11 @@ For the problems below, all we need to know is the complexity class of the "add"
 > Suppose we wanted to use the priority queue to sort N values: we add N values in the pq and then remove all N values (first the highest, next the second highest, ...). Here is the complexity of these combined operations for each implementation.
 
 - Implementation 1:
-  $O(N)\*O(1) + O(N)\*O(N)         = O(N)   + O(N^2)    = O(N^2)$
+  $O(N)\*O(1) + O(N)\*O(N)$         = $O(N)   + O(N^2)$    = $O(N^2)$
 - Implementation 2:
-  $O(N)\*O(N) + O(N)\*O(1)         = O(N^2) + O(N)      = O(N^2)$
+  $O(N)\*O(N) + O(N)\*O(1)$         = $O(N^2) + O(N)$      = $O(N^2)$
 - Implementation 3:
-  $O(N)\*O(Log N) + O(N)\*O(Log N) = O(N LogN) + O(N LogN) = O(N LogN)$
+  $O(N)\*O(Log N) + O(N)\*O(Log N)$ = $O(N LogN) + O(N LogN)$ = $O(N LogN)$
 
 Here, Implementation 3 has the lowest complexity class for the combined operations. Implementations 1 and 2 each do one operation quickly but the other slowly: both are done O(N) times. The slowest operation determines the complexity class, and both are equally slow. The complexity class O(Log N) is between O(1) and O(N); surprisingly, it is actually "closer" to O(1) than O(N), even though it does grow -because it grows so slowly; yes, O(1) doesn't grow at all, but O(Log N) grows very slowly: the known Universe has about $ 10^{90} $ particles of matter, and $ Log_2(10^{90}) = Log_2 (10 ^ 3) ^ {30} \approx 30 * 10 = 300 $, which isn't very big compared to $10^{90}$.
 
@@ -314,11 +313,11 @@ Here, Implementation 3 has the lowest complexity class for the combined operatio
 > Suppose we wanted to use the priority queue to find the 10 biggest (of N) values: we would enqueue N values and then dequeue 10 values. Here is the complexity of these combined operations for each implementation..
 
 - Implementation 1:
-  $O(N)\*O(1) + O(10)\*O(N)         = O(N)   + O(N)      = O(N)$
+  $O(N)\*O(1) + O(10)\*O(N)$        = $O(N)   + O(N)$      = $O(N)$
 - Implementation 2:
-  $O(N)\*O(N) + O(10)\*O(1)         = O(N^2) + O(1)     = O(N^2)$
+  $O(N)\*O(N) + O(10)\*O(1)$         = $O(N^2) + O(1)$     = $O(N^2)$
 - Implementation 3:
-  $O(N)\*O(Log N) + O(10)\*O(Log N) = O(N LogN) + O(LogN) = O(N LogN)$
+  $O(N)\*O(Log N) + O(10)\*O(Log N)$ = $O(N LogN) + O(LogN)$ = $O(N LogN)$
 
 Here, Implementation 1 has the lowest complexity for the combined operations. That makes sense, as the operation done O(N) times (add) is very simple (add to the end of a list/the front of a linked list is O(1)) and the operation done a constant number of times (10, independent of N) is the expensive operation (remove, which is O(N)). It even beats the complexity of Implementation 3. So, as N gets bigger, implementation 1 will eventually become faster than the other two for the "find the 10 biggest" task.
 
