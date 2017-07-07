@@ -37,20 +37,21 @@ html(lang='#{config.language}')
       link(rel='alternate', type=feed_type, href=url_for(config.feed.path))
 
   body
-    #header.body_container
+    #header
+      .body_container
 
-      .site-name
-        h1.hidden= current_title
+        .site-name
+          h1.hidden= current_title
 
-        a#logo(href=url_for('.'))
-          img(src= theme.logo, class='blog-logo nofancybox')
-          span= config.title
+          a#logo(href=url_for('.'))
+            img(src= theme.logo, class='blog-logo nofancybox')
+            span= config.title
 
-        p.description= config.subtitle
+          p.description= config.subtitle
 
-      #nav-menu
-        - for (var i in theme.menu)
-          +a_with_current_2(theme.menu[i].directory, __(theme.menu[i].page), theme.menu[i].icon)
+        #nav-menu
+          - for (var i in theme.menu)
+            +a_with_current_2(theme.menu[i].directory, __(theme.menu[i].page), theme.menu[i].icon)
 
     #layout.pure-g.body_container
       .pure-u-1.pure-u-md-4-4: .content_container

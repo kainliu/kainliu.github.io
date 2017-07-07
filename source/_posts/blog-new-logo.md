@@ -17,7 +17,7 @@ I do think a nice logo design, a compact icon, can deliver the essence spirit of
 
 > A picture is worth a thousand words.
 
-`World`. In Chinese it is written as `世界`([wiki](https://zh.wikipedia.org/wiki/%E4%B8%96%E7%95%8C)), which origins from `Sanskrit`(梵语, [wiki](https://en.wikipedia.org/wiki/Sanskrit)). The position of `Sanskrit` in India, is as Latin and Ancient Greek in Europe.
+`World`. In Chinese it is written as `世界`([wiki](https://zh.wikipedia.org/wiki/%E4%B8%96%E7%95%8C)), which origins from `Sanskrit`(`梵语`, [wiki](https://en.wikipedia.org/wiki/Sanskrit)). The position of Sanskrit in India, is as Latin and Ancient Greek in Europe.
 
 The two characters serve the word as two hemispheres. `世` means **all the times (in the past and future)**, and `界` means **all the spaces**.
 

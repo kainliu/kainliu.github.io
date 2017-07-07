@@ -4,6 +4,8 @@ $(document).ready(function() {
     if ($(this).hasClass('nofancybox')) return;
     var alt = this.alt;
     if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+
+    // *.jpg?width=50  -->  width: 0.5 * parent_width
     // add resizing functions
     var src = $(this).attr('src')
     if (src.indexOf('?width=') != -1) {
@@ -17,9 +19,9 @@ $(document).ready(function() {
           }
         }
         catch(e){
-          console.log("Wrong Regrex match for width")
+          // console.log("Wrong Regrex match for width")
         }
-        console.log(_max, _w)
+        // console.log(_max, _w)
         var w = Math.min(_w, _max)
         $(this).css({"width":  w + "px"})
         // $(this).attr('src', src.replace(/\?width=(\d{1,2}$)/, ''))

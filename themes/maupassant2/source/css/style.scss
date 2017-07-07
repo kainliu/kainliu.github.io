@@ -29,7 +29,7 @@ body {
 }
 .body_container {
     padding: 0 30px;
-    max-width: 1150px;
+    max-width: 1000px;
     margin: 0 auto;
 }
 .content_container {
@@ -66,12 +66,18 @@ div {
 }
 
 #header {
-    margin-top: 30px;
+    padding-top: 20px;
     text-align: left;
     // border-bottom: 1px solid #ddd;
-    position: relative;
+    // position: relative;
+    background: #FAFAFA;
+    .body_container{
+      // padding: 0 30px 0;
+      position: relative;
+    }
     .site-name {
-        // margin-bottom: 40px;
+        padding-bottom: 10px;
+
         h1 {
             padding: 0;
             margin: 0;
@@ -100,11 +106,11 @@ div {
         margin: 0;
         padding: 0;
         position: absolute;
-        right: 0;
-        top: 0;
+        right: 20px;
+        bottom: 0;
         a {
             display: inline-block;
-            padding: 5px 20px;
+            padding: 8px 20px;
             margin: 0 5px;
             line-height: 30px;
             color: #444;
@@ -119,8 +125,8 @@ div {
                 // border: 1px solid #ddd;
                 // border-bottom-color: #fff;
                 // background: #3498DB;
-                background: #f7f8f8;
-                padding-bottom: 3px;
+                // background: #f7f8f8;
+                padding-bottom: 6px;
                 // border-radius: 0;
                 border-bottom: 2px solid #3498DB;
                 .fa{
@@ -219,6 +225,12 @@ div {
     font-size: 20px;
     font-weight: normal;
     color: #888;
+    #selectedTag{
+      vertical-align: middle;
+      margin-left: 0.5em;
+      margin-bottom: 4px;
+      font-size: 15px;
+    }
 }
 
 /* the post of index, overrides the default post style*/
@@ -271,7 +283,7 @@ div {
 }
 
 .tagcloud{
-  margin: 20px 0;
+  margin: 20px 0 40px;
   a {
     font-family: 'Imprima', sans-serif;
     border-bottom: 1px solid #DDDDDD;
@@ -293,10 +305,10 @@ div {
 
 
 .post {
-    padding: 50px 0 30px;
+    padding: 0;
 
     .post-title {
-        margin: 0;
+        margin: 1em 0 0.5em;
         // color: #555;
         text-align: left;
         font: bold 35px/1.1 "Asar", "Times New Roman", Georgia, Times, sans-serif;
@@ -401,6 +413,9 @@ div {
             padding: 0 3px;
             background: #f7f8f8;
         }
+        blockquote{
+            color: black;
+        }
         p {
             margin: 0 0 1.234em;
 
@@ -453,6 +468,14 @@ div {
                     text-decoration: underline;
                 }
             }
+        }
+
+        .verticalCodeBlocks{
+            vertical-align:top;
+            display:inline-block;
+            width: 48.5%;
+            margin-right: 0.5%;
+            br{display: none;}
         }
     }
     .tags {
@@ -525,8 +548,8 @@ div {
 }
 
 #footer {
-    padding: .8em 0 3.6em;
-    margin-top: 1em;
+    padding: 1em 0 3em;
+    margin-top: 100px;
     line-height: 2.5;
     color: #6E7173;
     text-align: center;
@@ -568,15 +591,15 @@ div {
     }
     #header {
         .site-name {
-            // margin-bottom: 20px;
+            // padding-bottom: 20px;
             text-align: center;
         }
         #nav-menu {
             position: relative;
             text-align: center;
-            margin-top: 2em;
+            // margin-top: 10px;
             a {
-                padding: 5px 15px;
+                padding: 8px 15px;
                 line-height: 27px;
                 height: 27px;
                 font-size: 18px;
@@ -1764,11 +1787,14 @@ figure.highlight,
 .post-nav {
       overflow: hidden;
       margin-top: 40px;
-      margin-bottom: 100px;
+      margin-bottom: 40px;
       padding: 20px 0;
       white-space: nowrap;
       // border-top: 1px solid #eee;
       // border-bottom: 1px solid #eee;
+      .pure-u-md-1-2{
+          text-align: center;
+      }
 
       h2{
         margin: 10px 0 20px 0;
@@ -1790,64 +1816,63 @@ figure.highlight,
 
         span{
           min-width: 150px;
-          text-align: center;
+          max-width: 100%;
+          // text-align: center;
           line-height:30px;
           font-size: 15px;
-          color: #555;
+          // color: #555;
           // border: 1px solid #ddd;
-          border-radius: 3px;
+          // border-radius: 3px;
           float: left;
           // margin: 40px 0;
           margin: 80px 0 0 0;
-          padding: 5px 6px 4px 6px;
+          // padding: 5px 6px 4px 6px;
+          padding: 5px 0;
           // background-color: #F8F8F8;
           background: linear-gradient(180deg,rgba(255, 255, 255, 0.6) 0, #fff 40px,#fff);
           // border-radius: 4px;
           font-family: "Asar", "Times New Roman", Georgia, Times, sans-serif;
           font-size: 17px;
           &:before {
-            font-family: "Asar", "FontAwesome";
-            display: block;
-            font-size: 25px;
-            color: #000;
-          }
+                font-family: "Asar", "FontAwesome";
+                display: block;
+                font-size: 25px;
+                color: #000;
+            }
         }
         &.pre{
-            float: left;
-            // text-align: left;
-            margin-right: 1em;
+            text-align: left;
             span:before {
-              content: "\f0d9  Previous";
-              text-align: left;
+                content: "\f0d9  PREV";
+                // text-align: left;
             }
         }
         &.next {
-            float: left;
-            // text-align: right;
+            // float: left;
+            text-align: right;
             span:before {
-              content: "Next  \f0da";
-              text-align: right;
+                content: "NEXT  \f0da";
+                // text-align: right;
             }
         }
 
         &:hover{
-
-          color: #222;
+            color: #222;
         }
 
         i{
-          img{
-            height: 120px;
-          }
-          position: absolute;
-          line-height: 120px;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          z-index: -1;
-          vertical-align: middle;
-          text-align: center;
+            img{
+                height: 150px;
+            }
+            position: absolute;
+            line-height: 150px;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            vertical-align: middle;
+            text-align: center;
         }
       }
       /*

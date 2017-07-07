@@ -9,20 +9,22 @@ block title
      title= __('archive') + ' | ' + config.title
 block content
 
-  .post
+
+  .tagcloud
+
 
     if page.category || page.tag
-      - var labelContent = page.category || page.tag
-      - labelContent = labelContent.charAt(0).toUpperCase() + labelContent.slice(1);
-      h1.label-title=  __('reading_label', labelContent)
-      br
-      br
-    else
-      .post-archive
-        h2!= "Tags"
-      .tagcloud
-        != tagcloud({min_font: 12, max_font: 22, amount: 100, orderby: 'count'})
+      - var tag = page.category || page.tag;
 
+      h1.label-title
+        = __('reading_label', '')
+        a#selectedTag
+          != tag
+    else
+      != tagcloud({min_font: 12, max_font: 22, amount: 100, orderby: 'count'})
+
+
+  .post
     .post-archive
         //Use lodash to classify posts. See https://lodash.com/docs#groupBy
         each posts, year in _.groupBy(page.posts.toArray(), function(p){return -p.date.format('YYYY')})

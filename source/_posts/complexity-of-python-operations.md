@@ -7,6 +7,8 @@ tag:
 thumbnail: /images/justice-scale.png
 description: A clear and inspiring explanation by Richard Pattis.
 mathjax: true
+<!-- toc: true -->
+
 ---
 
 This article [`Complexity of Python Operations`](https://www.ics.uci.edu/~pattis/ICS-33/lectures/complexitypython.txt) has a clear and inspiring explanation of computation complexity.
@@ -198,13 +200,13 @@ Compound statements can be analyzed by composing the complexity classes of their
 
 ------------------------------------------------------------------------------
 
-### 3 Algorithms for `is_unique`
+### An example
 
 Let's use the data and tools discussed above to analyze (determine their complexity classes) three different functions that each compute the same result:
 
 > Whether or not a list contains only unique values (no duplicates).
 
-We will assume in all three examples that len(alist) is N.
+We will assume in all three examples that `len(alist)` is N.
 
 #### Algorithm 1
 > A list is unique if each value in the list does not occur in any later indexes: alist[i+1:] is a list containing all values after the one at index i.

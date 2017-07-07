@@ -300,10 +300,10 @@ As we seen from the above results - nearest neighbors have similar colors - whic
 
 ## Wrapping Up
 
-Built on handcrafted codes, it's a good start for me, to try an idea to push an idea into a viable tool.
+It's a meaningful trial for me, to starting from an idea to presenting a viable tool.
 
 However, this method is highly influenced by the diversity of colors. For example, the 4th experiment mixed the pictures of white cups with the baseballs, since they share a large percentage of similar white colors.
 
-To overcome this shortcoming, an idea is to take boundaries of the objects into account. There are many popular algorithms in [contour/edge detection](https://en.wikipedia.org/wiki/Edge_detection)
+To overcome this shortcoming, an option is to take boundaries of the objects into account. There are many popular algorithms in [contour/edge detection](https://en.wikipedia.org/wiki/Edge_detection).
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/%C3%84%C3%A4retuvastuse_n%C3%A4ide.png/1000px-%C3%84%C3%A4retuvastuse_n%C3%A4ide.png" width = "50%" alt="Edge detection example. From wikipedia." />

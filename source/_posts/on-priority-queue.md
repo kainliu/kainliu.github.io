@@ -1,10 +1,10 @@
 ---
-title: Priority Queue
+title: On Priority Queue
 date: 2017-05-09 14:00:10
 tag:
 - leetcode
 - python
-- notes
+- data structure
 mathjax: true
 ---
 

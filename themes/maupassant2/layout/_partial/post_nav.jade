@@ -1,5 +1,5 @@
 if page.next || page.prev
-  .post-nav
+  .post-nav.pure-u-1.pure-u-md-4-4
 
 
     h2
@@ -7,38 +7,40 @@ if page.next || page.prev
       != "Other Posts"
     if page.prev
       //a.pre(href=url_for(page.prev_link ? page.prev_link : page.prev.path))= page.prev.title
-      if page.prev.thumbnail
-        a.pre(
-          href=url_for(page.prev_link ? page.prev_link : page.prev.path),
-          style='background-image: url(#{page.prev.thumbnail});'
-        )
-          span
-            =page.prev.title
-      else
-        a.pre(
-          href=url_for(page.prev_link ? page.prev_link : page.prev.path),
-        )
-          span
-            =page.prev.title
-          i
-            +thumbnailPNG()
-          
+      div.pure-u-md-1-2
+        if page.prev.thumbnail
+          a.pre(
+            href=url_for(page.prev_link ? page.prev_link : page.prev.path),
+            style='background-image: url(#{page.prev.thumbnail});'
+          )
+            span
+              =page.prev.title
+        else
+          a.pre(
+            href=url_for(page.prev_link ? page.prev_link : page.prev.path),
+          )
+            span
+              =page.prev.title
+            i
+              +thumbnailPNG(page.prev.title)
+
 
 
     if page.next
       // a.next(href=url_for(page.next_link ? page.next_link : page.next.path))= page.next.title
-      if page.next.thumbnail
-        a.next(
-          href=url_for(page.next_link ? page.next_link : page.next.path)
-          style='background-image: url(#{page.next.thumbnail})'
-        )
-          span
-            =page.next.title
-      else
-        a.next(
-          href=url_for(page.next_link ? page.next_link : page.next.path),
-        )
-          span
-            =page.next.title
-          i
-            +thumbnailPNG()
+      div.pure-u-md-1-2
+        if page.next.thumbnail
+          a.next(
+            href=url_for(page.next_link ? page.next_link : page.next.path)
+            style='background-image: url(#{page.next.thumbnail})'
+          )
+            span
+              =page.next.title
+        else
+          a.next(
+            href=url_for(page.next_link ? page.next_link : page.next.path),
+          )
+            span
+              =page.next.title
+            i
+              +thumbnailPNG(page.next.title)

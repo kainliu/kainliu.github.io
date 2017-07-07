@@ -1,11 +1,10 @@
 ---
-title: Promise
+title: On Promise
 date: 2017-05-09 14:00:10
 disqus: true
 tag:
 - javascript
 - async
-- notes
 ---
 
 With three examples I summarize the usage of `promise`:
@@ -63,7 +62,7 @@ function asyncRequest(e) {
 > work([1,2,3])
 
 A RESULT: 0     // the initial promise value
-Promise {[[PromiseStatus]]: "pending", [[PromiseValue]]: undefined}
+Promise { <pending> }
                 // 1s later
 B RESULT: 1     
 A RESULT: 1
@@ -92,14 +91,14 @@ Then, `Promise.all` takes an array of promises, and create a promise that fulfil
 ```javascript
 > workInParallel([1,2,3])
 
-Promise {[[PromiseStatus]]: "pending", [[PromiseValue]]: undefined}
+Promise { <pending> }
                 // 3s later
 FINAL R.: 1,2,3
 ```
 
 ```javascript
 > workInParallel([1,3,2])
-Promise {[[PromiseStatus]]: "pending", [[PromiseValue]]: undefined}
+Promise { <pending> }
                 // 3s later
 FINAL R.: 1,3,2
 
@@ -133,7 +132,7 @@ function workInParallel2(arr) {
 A RESULT: 1
 A RESULT: 2
 A RESULT: 3
-Promise {[[PromiseStatus]]: "pending", [[PromiseValue]]: undefined}
+Promise { <pending> }
               // 1s later
 B RESULT: 1
               // 1s later
@@ -153,11 +152,11 @@ function workInParallelAndSequence(arr) {
   return arr.map(asyncRequest)
     .reduce((sequence, item) => {
       // init a promise sequence
-      console.log(`seq.:`, sequence)
+      console.log(`SEQ.:`, sequence)
       console.log(`---`)
       return sequence.then( (result) => {
         console.log(`A RESULT: ${result}`)
-        console.log(`item:`, item)
+        console.log(`ITEM:`, item)
         console.log(`---`)
         // queue each promise request to the sequence
         return item
@@ -235,9 +234,26 @@ B RESULT: 2
 FINAL R.: 1,3,2
 ```
 
-As seen from the console, the response of `2` was being held while response of `3` was on the fly. The function forces the sequence of showing the results.
+As seen in the console output, the response of `2` was being held while response of `3` on the fly.
+
+In short,
+
+```javascript
+function workInParallelAndSequence(arr) {
+  return arr.map(asyncRequest)
+    .reduce((sequence, item) => {
+      return sequence.then( () => {
+        return item
+      })
+      .then( result => {
+        console.log(result)
+      })
+    }, Promise.resolve())
+}
+```
+
 
 
 ## Todo
 
-I find that debugging asynchronous functions is quite hard even enhanced with *Promise*. Instead of `console.log`, I believe there will be a better tool to detail the request stacks.
+I find that debugging asynchronous functions is quite hard even enhanced with *Promise*. Instead of `console.log`, I believe there will be a better tool to detail requesting/responding stacks.
