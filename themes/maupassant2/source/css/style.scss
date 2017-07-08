@@ -1815,7 +1815,8 @@ figure.highlight,
         margin-bottom: 10px;
 
         span{
-          min-width: 150px;
+          color: #000;
+          min-width: 300px;
           max-width: 100%;
           // text-align: center;
           line-height:30px;
@@ -1829,15 +1830,16 @@ figure.highlight,
           // padding: 5px 6px 4px 6px;
           padding: 5px 0;
           // background-color: #F8F8F8;
-          background: linear-gradient(180deg,rgba(255, 255, 255, 0.6) 0, #fff 40px,#fff);
+          background: linear-gradient(180deg,rgba(255, 255, 255, 0.5) 0, #fff 40px,#fff);
           // border-radius: 4px;
           font-family: "Asar", "Times New Roman", Georgia, Times, sans-serif;
           font-size: 17px;
           &:before {
-                font-family: "Asar", "FontAwesome";
+                font-family: "FontAwesome";
                 display: block;
                 font-size: 25px;
                 color: #000;
+                opacity: 0.6;
             }
         }
         &.pre{

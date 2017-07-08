@@ -8,6 +8,9 @@ tag:
 - memorization
 - variable scope
 mathjax: true
+thumbnail: /images/transparency.png
+description: How to remember things without a global variable.
+
 ---
 
 This trick is using `_cache` as storage, for memorizing internal states of expensive calculations ([python docs](https://docs.python.org/2/faq/programming.html#why-are-default-values-shared-between-objects)).
@@ -40,31 +43,36 @@ def fib_plus(n, _cache = {}):
     return result
 ```
 
-If you totally get it -- isn't it nice? -- at least I am very happy to accept it.
+If you totally get this `_cache = {}` trick --- isn't it nice? --- I am very happy to accept it.
 
-Of course, maintaining a global variable for storage could also deliver the same functionality. But I prefer this way not because it's only a matter of taste.
+Of course, maintaining a global variable for storage could also deliver the same functionality. I prefer this way, not because it's only a matter of taste.
 
 ```python
+""" Using global cache """
+
 cache = {}
 
 def run(n):
-    if n in cache:      # wait.. is it a undefined local variable?
-        ...
+    if n in cache:      # Wait.. is it a undefined local variable?
+        ....
 
     if n == MAXIMUM_VALUE:
-        cache = {}      # may I clear the cache safely?
+        cache = {}      # May I clear the cache safely?
 
-    ...
-    _cache[n] = result  # should be okay to update the cache
+    ....
+    _cache[n] = result  # Should be okay to update the cache.
+
+def walk(n):            # What if I do not want to share cache with other functions?
+    ....
 ```
 
 I can not answer these questions with 100 percent confidence.
 
 Let's start with understanding `local` and `global` variables.
 
-## local & global
+## Local & Global
 
-Python is compact. And with a trade off.
+Python is compact. And with a price.
 
 For example, it saves us from declaring the variables in a verbose way,
 
@@ -78,7 +86,8 @@ Point x = new Point(10, 10);  /* Java */
 const x = new Point(10, 10);  // ECMA5 Javascript
 ```
 
-But it takes some efforts to understand the scope of variables.
+But it takes some efforts to understand its concept of variable scopes.
+
 <div class="verticalCodeBlocks">
 ```python
 arr = [True]
@@ -112,6 +121,7 @@ outside: [True]
 </div>
 
 Let's examine the differences.
+
 In the first block, I am actually calling `arr.__setitem__(0, False)`. Python checks `arr` is not defined inside function scope (`local`), and thus continue looking for it in the outside scope (`global`). Successfully finds the `arr` variable, and calls a function to change its first item.  
 
 While in the second block, python takes `arr = [False]` as an action to create a local variable.
@@ -275,9 +285,7 @@ Actually,
 **Top-down Dynamic Programming** $\approx$ **Divide & Conquer** + **Memorization**
 
 
-## Default value
-
-Next let's see the default value of arguments.
+## Default Value
 
 Consider following example:
 
@@ -318,7 +326,6 @@ function store(ele, arr = []){
     return arr
 }
 
-// It is just like normal expectation.
 // A new call creates a new array with default value.
 console.log(store(1))  // output: [ 1 ]
 console.log(store(2))  // output: [ 2 ]
@@ -328,13 +335,15 @@ So a good programming practice is to NOT use mutable objects, e.g.`list`/`dict`,
 
 Unless you are very clear about what you are doing, mutable objects of default values can cause confusing consequences.
 
-Looking at this `_cache = {}` trick again. It takes full advantage of such feature, `_cache` is *bound* to this function, serving as a function-level shared variable. It reminds me of *class variable* shared by all instances.
+Looking at `fib_plus(..., _cache = {})` again, it takes full advantage of such feature, `_cache` is *bound* to this function, serving as a function-level shared variable. It reminds me of *class variable* shared by all instances.
 
 -----
 
-Now we could correct the mistakes in the previous solutions.
+I will end this post with correcting the mistakes in the previous global solution, this time with 100 precent confidence.
 
 ```python
+""" Global variable solution """
+
 cache = {}
 def run(n):
     if n in cache:      # Wait.. is it an undefined local variable?
@@ -344,12 +353,15 @@ def run(n):
         # cache = {}    # May I clear the cache safely?
                         #
                         # Not in this way.
-                        # This declaration will raise UnboundLocalError.
-        cache.clear()   # Use clear method of dictionary.
+                        # This declaration will raise `UnboundLocalError`.
+        cache.clear()   # Use `clear` method instead.
 
     ....
 
-    cache[n] = result  # It's okay to update the cache in this way
-                        # since it's cache.__setitem__(n, result)
+    cache[n] = result   # It's okay to update the cache in this way
+                        # since it's `cache.__setitem__(n, result)`.
 
+def walk():
+    ....                # Every other function could touch the global cache.
+                        # So why not use `_cache` trick :)
 ```

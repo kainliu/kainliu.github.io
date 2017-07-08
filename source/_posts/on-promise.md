@@ -197,16 +197,21 @@ B RESULT: 3
 FINAL R.: 1,2,3
 ```
 
-Let's assume one of the content wither a higher priority, for example, the main body of the web page, should be displayed before the sidebar widgets.
+Let's assume in a single page, there are 3 units loading contents by `promise` requests.
+- `Header` contains relatively less information and returns very quickly.
+- `Main` contains articles. It costs the longest time among all units.
+- `Sidebar` contains advertisement. We do not want to impress the audience with advertisements, while the article is still loading. The sidebar usually returns more quickly than `Main`.
+
+In short, our intention is to make sure that `Sidebar` displays after `Main`.
 
 ```javascript
+// The request
 [
-  1, // `#header`  takes 1 second
-  3, // `#min`     takes 3 seconds
-  2  // `#sidebar` takes 2 seconds
+  1, // `#Header`  takes 1 second
+  3, // `#Main`    takes 3 seconds
+  2  // `#Sidebar` takes 2 seconds
 ]
 ```
-We can apply this in certain scenarios when the main content (feed, article, etc.) is required to show before all less important contents (sidebar, ads, etc.).
 
 We would like to take full advantage of `promise` parallelism and keep the sequencing.
 
@@ -236,7 +241,7 @@ FINAL R.: 1,3,2
 
 As seen in the console output, the response of `2` was being held while response of `3` on the fly.
 
-In short,
+Short version is as follows.
 
 ```javascript
 function workInParallelAndSequence(arr) {
@@ -252,7 +257,7 @@ function workInParallelAndSequence(arr) {
 }
 ```
 
-
+Such method can be applied in many scenarios, when the main content (feed flow, article, etc.) is slower than less important contents (comments, advertisements, etc.).
 
 ## Todo
 

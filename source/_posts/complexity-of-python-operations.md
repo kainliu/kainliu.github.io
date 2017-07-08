@@ -11,6 +11,10 @@ mathjax: true
 
 ---
 
+
+![Big-O Complexity Chart. From <i>bigocheatsheet.com</i>](/images/big-o-1.png?width=60)
+
+
 This article [`Complexity of Python Operations`](https://www.ics.uci.edu/~pattis/ICS-33/lectures/complexitypython.txt) has a clear and inspiring explanation of computation complexity.
 I really like the way it analyses problems, especially the section for [Priority Queue](#Priority-Queue). I reformat the whole article to Markdown as follows.
 

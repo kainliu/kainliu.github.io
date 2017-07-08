@@ -3,6 +3,7 @@ title: Find Similar Images Based On Locality Sensitive Hashing
 date: 2016-04-01
 tags:
 - python
+- fingerprint
 - similarity
 - algorithm
 categories:
