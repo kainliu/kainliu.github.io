@@ -169,9 +169,9 @@ The first block is easy to understand given previous example -- `arr.extend` is 
 
 Meanwhile, in second block, `arr += [False]` equals to `arr = arr + [False]`. One principle here in python is,
 
-> Anything being assigned is taken as local variable in a function.
+> Anything being assigned ( `x = ...` ) is taken as a local variable in `function`.
 
-Such principle of `=` judges `arr` is a local variable. Again python looks at the right side equation, and throws an error since it is not referenced.
+On the left side of equation, with such principle, python judges `arr` is a local variable. On the right side of equation, it throws an error because of a loop of variable assignment.
 
 Our original purpose is to take `arr` as a global variable. And we have to add a line to declare such intention.
 
@@ -219,7 +219,7 @@ outside: [True]
 var a = true;
 
 function run(){
-    // OPS! forget to initialize
+    // OPS! forget to initialize before use it
     a = false;
     console.log('inside: ', a)
 }
@@ -253,12 +253,12 @@ outside: true
 ```
 </div>
 
-In comparison, it's easy to understand why Javascript shocks so many engineers outside front-end area, by placing more weight on `easy to run` over `global variable safety`. While in Baidu, I have gained more than enough experience in debugging on web pages, where global variables are contaminated by careless coders.
+In comparison, it's easy to understand why Javascript shocks so many engineers with non-front-end background, by placing more weight on `easy to run` over `global variable safety`. While in Baidu (one of the largest search companies in the world, [wiki](https://en.wikipedia.org/wiki/Baidu)), I have gained more than enough experience in debugging on web pages, where global variables are contaminated by careless coders.
 
 
 ## Memorization
 
-Does memorization speed up the calculation?
+Does the cache speed up the calculation?
 
 ```Python
 from timeit import default_timer as timer
@@ -280,10 +280,11 @@ print '%6f / %6f = %d' % (time1, time2, time1 / time2)
 
 The `Big O` of `fib` is $O(2^n)$ ([stackoverflow](https://stackoverflow.com/questions/360748/computational-complexity-of-fibonacci-sequence)), while the `fib_plus` is $O(n)$.
 
-Actually,
+Memorization contributes a lot, and actually it is the core of *Dynamic Programming*. Some would like to introduce DP as,
 
-**Top-down Dynamic Programming** $\approx$ **Divide & Conquer** + **Memorization**
+> **Top-down Dynamic Programming** $\approx$ **Divide & Conquer** + **Memorization**
 
+And I think this equation explains *Dynamic Programming* better than the name itself.
 
 ## Default Value
 
