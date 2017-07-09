@@ -22,6 +22,7 @@ block content
         span.category
           for category in page.categories.toArray()
             a(href=url_for(category.path))= category.name
+
       if theme.busuanzi == true
         script(src='https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js', async)
         span(id='busuanzi_container_page_pv', style='padding-left: 20px')
@@ -34,9 +35,7 @@ block content
 
     if theme.duoshuo
       a.ds-thread-count(data-thread-key=page.path, href=url_for(page.path) + '#comments')
-    // -
-      if theme.disqus
-        a.disqus-comment-count(data-disqus-identifier=page.path, href=url_for(page.path) + '#disqus_thread')
+
 
     if page.toc
       // div(class='clear')
@@ -48,26 +47,29 @@ block content
     .post-content
       != page.content
 
-    if theme.shareto == true
-      script(type='text/javascript', src=url_for(theme.js) + '/share.js' + '?v=' + theme.version, async)
-      a.article-share-link(data-url='#{page.permalink}', data-id='#{page._id}')= __('shareto')
-
     include _partial/post_nav
 
-    if theme.duoshuo
-      div(class='ds-share flat' data-thread-key=page.path, data-title=page.title, data-url=page.permalink)
-         .ds-share-inline
-            ul.ds-share-icons-16
-              li(data-toggle='ds-share-icons-more')
-                a(class='ds-more' href='javascript:void(0);') 分享到：
-              li
-                a(class='ds-weibo' href='javascript:void(0);' data-service='weibo') 微博
-              li
-                a(class='ds-qzone' href='javascript:void(0);' data-service='qzone') QQ空间
-              li
-                a(class='ds-qqt' href='javascript:void(0);' data-service='qqt') 腾讯微博
-              li
-                a(class='ds-wechat' href='javascript:void(0);' data-service='wechat') 微信
-            .ds-share-icons-more
+    //-
+      if theme.shareto == true
+        script(type='text/javascript', src=url_for(theme.js) + '/share.js' + '?v=' + theme.version, async)
+        a.article-share-link(data-url='#{page.permalink}', data-id='#{page._id}')= __('shareto')
+
+
+
+      if theme.duoshuo
+        div(class='ds-share flat' data-thread-key=page.path, data-title=page.title, data-url=page.permalink)
+           .ds-share-inline
+              ul.ds-share-icons-16
+                li(data-toggle='ds-share-icons-more')
+                  a(class='ds-more' href='javascript:void(0);') 分享到：
+                li
+                  a(class='ds-weibo' href='javascript:void(0);' data-service='weibo') 微博
+                li
+                  a(class='ds-qzone' href='javascript:void(0);' data-service='qzone') QQ空间
+                li
+                  a(class='ds-qqt' href='javascript:void(0);' data-service='qqt') 腾讯微博
+                li
+                  a(class='ds-wechat' href='javascript:void(0);' data-service='wechat') 微信
+              .ds-share-icons-more
 
     include _partial/comments

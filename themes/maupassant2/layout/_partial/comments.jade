@@ -1,12 +1,30 @@
-if theme.duoshuo
-  .ds-thread(data-thread-key=page.path, data-title=page.title, data-url=page.permalink, data-author-key='1')
 
 if theme.disqus
   if page.disqus == false
     #disqus_none
   else
+    #disqus_show.readmore
+      <a class="show-comments" href="javascript:return false;">Load <span class="disqus-comment-count" data-disqus-identifier="#{page.path}">comments</span></a>
+
     #disqus_thread
     script.
+      // Requires jQuery of course.
+      $(document).ready(function() {
+          $('.show-comments').on('click', function(){
+              var disqus_shortname = '#{theme.disqus}';
+              // ajax request to load the disqus javascript
+              $.ajax({
+                      type: "GET",
+                      url: "//" + disqus_shortname + ".disqus.com/embed.js",
+                      dataType: "script",
+                      cache: true
+              });
+              // hide the button once comments load
+              $(this).fadeOut();
+          });
+      });
+
+    //-
       var disqus_shortname = '#{theme.disqus}';
       var disqus_identifier = '#{page.path}';
       var disqus_title = '#{page.title}';
@@ -16,8 +34,13 @@ if theme.disqus
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
       })();
+
     script(id='dsq-count-scr', src='//#{theme.disqus}.disqus.com/count.js', async)
 
-if theme.uyan
-  #uyan_frame
-    script(src="http://v2.uyan.cc/code/uyan.js?uid='#{theme.uyan}'")
+//-
+  if theme.duoshuo
+    .ds-thread(data-thread-key=page.path, data-title=page.title, data-url=page.permalink, data-author-key='1')
+
+  if theme.uyan
+    #uyan_frame
+      script(src="http://v2.uyan.cc/code/uyan.js?uid='#{theme.uyan}'")

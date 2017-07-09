@@ -12,7 +12,6 @@ block content
 
   .tagcloud
 
-
     if page.category || page.tag
       - var tag = page.category || page.tag;
 
@@ -32,7 +31,7 @@ block content
           ul.listing
             for post in posts
               li
-                span.date= post.date.format('YYYY/MM/DD')
+                span.date= post.date.format('MM/DD')
                 a(href=url_for(post.path), title=post.title)
                   +title(post)
   include _partial/paginator.jade
