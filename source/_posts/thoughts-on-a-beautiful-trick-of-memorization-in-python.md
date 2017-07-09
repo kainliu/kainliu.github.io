@@ -9,43 +9,43 @@ tag:
 - variable scope
 mathjax: true
 thumbnail: /images/transparency.png
-description: How to remember things without a global variable.
+description: Using function-level shared variables as memorizers.
 
 ---
 
-This trick is using `_cache` as storage, for memorizing internal states of expensive calculations ([python docs](https://docs.python.org/2/faq/programming.html#why-are-default-values-shared-between-objects)).
+This trick is using a function argument to memorize recursive states of expensive calculations ([python docs](https://docs.python.org/2/faq/programming.html#why-are-default-values-shared-between-objects)).
 
-I use it to improve naive `fibonacci` as follow:
+An example is to improve fibonacci calculator as follows,
 
 ```python
-def fib(n):
+def fib_naive(n):
     """ Naive fibonacci calculator """
-    if n == 0: return 0
-    if n == 1: return 1
-
-    return fib(n-1) + fib(n-2)
+    if n <= 1: return 1
+    return fib_naive(n-1) + fib_naive(n-2)
 ```
 
 ```python
-def fib_plus(n, _cache = {}):
+def fib_cache(n, _cache = {}):
     """ Fibonacci calculator with cache """
 
+    # Return cache results
     if n in _cache:
-        return _cache[n]      # Return cache results
+        return _cache[n]      
 
-    if   n == 0: result = 0
-    elif n == 1: result = 1
+    if n <= 1:
+        result = 1
     else:
-        result = fib_plus(n-1) + fib_plus(n-2)
-        # Callers will never provide a second parameter for this function.
+        result = fib_cache(n-1) + fib_cache(n-2)
+        # Callers will never provide a second parameter.
 
-    _cache[n] = result        # Store results
+    # Store results
+    _cache[n] = result        
     return result
 ```
 
-If you totally get this `_cache = {}` trick --- isn't it nice? --- I am very happy to accept it.
+If you totally get the trick of `_cache = {}` --- isn't it nice? --- I am very happy to accept it.
 
-Of course, maintaining a global variable for storage could also deliver the same functionality. I prefer this way, not because it's only a matter of taste.
+Of course, maintaining a global variable for storage could also deliver the same functionality.
 
 ```python
 """ Using global cache """
@@ -125,10 +125,11 @@ Let's examine the differences.
 In the first block, I am actually calling `arr.__setitem__(0, False)`. Python checks `arr` is not defined inside function scope (`local`), and thus continue looking for it in the outside scope (`global`). Successfully finds the `arr` variable, and calls a function to change its first item.  
 
 While in the second block, python takes `arr = [False]` as an action to create a local variable.
-```
-<global variable list>
+
+```python
+# < global variable scope >
 def run():
-    <local variable list>
+    # < local variable scope >
 ```
 
 If we would like to add another result to the `arr`, there are two ways:
@@ -265,9 +266,9 @@ from timeit import default_timer as timer
 
 k = 30
 start = timer()
-fib(k)
+fib_naive(k)
 pause = timer()
-fib_plus(k)
+fib_cache(k)
 stop = timer()
 
 time1 = pause - start
@@ -278,7 +279,7 @@ print '%6f / %6f = %d' % (time1, time2, time1 / time2)
 0.311446 / 0.000061 = 5102
 ```
 
-The `Big O` of `fib` is $O(2^n)$ ([stackoverflow](https://stackoverflow.com/questions/360748/computational-complexity-of-fibonacci-sequence)), while the `fib_plus` is $O(n)$.
+The `Big O` of `fib` is $O(2^n)$ ([stackoverflow](https://stackoverflow.com/questions/360748/computational-complexity-of-fibonacci-sequence)), while the `fib_cache` is $O(n)$.
 
 Memorization contributes a lot, and actually it is the core of *Dynamic Programming*. Some would like to introduce DP as,
 
@@ -336,7 +337,7 @@ So a good programming practice is to NOT use mutable objects, e.g.`list`/`dict`,
 
 Unless you are very clear about what you are doing, mutable objects of default values can cause confusing consequences.
 
-Looking at `fib_plus(..., _cache = {})` again, it takes full advantage of such feature, `_cache` is *bound* to this function, serving as a function-level shared variable. It reminds me of *class variable* shared by all instances.
+Looking at `fib_cache(..., _cache = {})` again, it takes full advantage of such feature, `_cache` is *bound* to this function, serving as a function-level shared variable. It reminds me of *class variable* shared by all instances.
 
 -----
 
