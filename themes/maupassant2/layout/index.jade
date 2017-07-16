@@ -6,71 +6,114 @@ block title
     title= config.title + ' | ' + config.subtitle
   else
     title= config.title
+
 block content
+  div#index-posts
+    - counter = 0
+    for post in page.posts.toArray()
 
-  for post in page.posts.toArray()
+      - counter = counter + 1
+      if counter == 1
+        div.post.index-post.pure-u-md-4-4#index-post-first
+          div.post-container
+            
+              .post-content
+                a(href=url_for(post.path))
+                  +thumbnail(post)
+        
+              h3.post-title
+                a(href=url_for(post.path))
+                  +title(post)
+              if post.description
+                .post-desc
+                  != post.description
+              else
+                .post-desc
+                  - var content = ''
+                  - var tags = post.tags.toArray()
+                  - tags.forEach(function(val, key){
+                      - n = val.name
+                      - if (key == 0) { content += (n.charAt(0).toUpperCase() + n.slice(1)) }
+                      - else if (key == tags.length - 1) { content += (' and ' + n + '.')  }
+                      - else {content += (', ' + n) }
+                  - })
+                    // - console.log(tag)
+                  != content
+              div(class='readmore')
+                a(href=url_for(post.path))= readingTime(post.content)
+          div.screen-wide-bg
 
-    div.post.index-post.pure-u-md-1-2
-      //-
-        h1.post-title
-          include _partial/helpers
-          a(href=url_for(post.path))
-            +title(post)
-        .post-meta= post.date.format(config.date_format)
-        if theme.duoshuo
-          a.ds-thread-count(data-thread-key=post.path, href=url_for(post.path) + '#comments')
-        if theme.disqus
-          a.disqus-comment-count(data-disqus-identifier=post.path, href=url_for(post.path) + '#disqus_thread')
+          script.
+            $(document).ready(function(){
+              
+              $(".screen-wide-bg").each(function(){
+                let h = $(this).parent().find(".post-container").height()
+                //- console.log($(this).parent().find(".post-content"))
+                //- console.log(h)
+                $(this).css({"height": h, "margin-top": -h})
+              })
+            })
 
-      // add thumbnail
-      .post-content
-        a(href=url_for(post.path))
-          +thumbnail(post)
-
-      h3.post-title
-        a(href=url_for(post.path))
-          +title(post)
-      if post.description
-        .post-desc
-          != post.description
       else
-        .post-desc
-          - var content = ''
-          - var tags = post.tags.toArray()
-          - tags.forEach(function(val, key){
-              - n = val.name
-              - if (key == 0) { content += (n.charAt(0).toUpperCase() + n.slice(1)) }
-              - else if (key == tags.length - 1) { content += (' and ' + n + '.')  }
-              - else {content += (', ' + n) }
-          - })
-            // - console.log(tag)
-          != content
-      //-
-        else if post.excerpt
+        div.post.index-post.pure-u-md-1-2
+          //-
+            h1.post-title
+              include _partial/helpers
+              a(href=url_for(post.path))
+                +title(post)
+            .post-meta= post.date.format(config.date_format)
+            if theme.duoshuo
+              a.ds-thread-count(data-thread-key=post.path, href=url_for(post.path) + '#comments')
+            if theme.disqus
+              a.disqus-comment-count(data-disqus-identifier=post.path, href=url_for(post.path) + '#disqus_thread')
+
+          // add thumbnail
           .post-content
-            != post.excerpt
-        else if post.content
-          - var br = 0
-          - for (var i = 0; i < 5; ++i) {
-            - br = post.content.indexOf('\n',br+1)
-            if br<0
-              - break
-            if br >150
-              - break
-          - }
-          if br < 0
-            .post-content
-              != post.content
+            a(href=url_for(post.path))
+              +thumbnail(post)
+
+          h3.post-title
+            a(href=url_for(post.path))
+              +title(post)
+          if post.description
+            .post-desc
+              != post.description
           else
-            .post-content
-              != post.content.substring(0, br)
-      div(class='readmore')
-        a(href=url_for(post.path))= __('Readmore')
+            .post-desc
+              - var content = ''
+              - var tags = post.tags.toArray()
+              - tags.forEach(function(val, key){
+                  - n = val.name
+                  - if (key == 0) { content += (n.charAt(0).toUpperCase() + n.slice(1)) }
+                  - else if (key == tags.length - 1) { content += (' and ' + n + '.')  }
+                  - else {content += (', ' + n) }
+              - })
+                // - console.log(tag)
+              != content
+          //-
+            else if post.excerpt
+              .post-content
+                != post.excerpt
+            else if post.content
+              - var br = 0
+              - for (var i = 0; i < 5; ++i) {
+                - br = post.content.indexOf('\n',br+1)
+                if br<0
+                  - break
+                if br >150
+                  - break
+              - }
+              if br < 0
+                .post-content
+                  != post.content
+              else
+                .post-content
+                  != post.content.substring(0, br)
+          div(class='readmore')
+            a(href=url_for(post.path))= readingTime(post.content)
 
   include _partial/paginator
 
-  //.tagcloud
-    //!= tagcloud({min_font: 14, max_font: 24, amount: 100, orderby: 'count'})
 
   if theme.disqus
     script(id='dsq-count-scr', src='//#{theme.disqus}.disqus.com/count.js', async)
