@@ -9,19 +9,18 @@ block title
      title= __('archive') + ' | ' + config.title
 block content
 
+  .screen-wide-bg
+    .tagcloud
+      if page.category || page.tag
+        - var tag = page.category || page.tag;
 
-  .tagcloud
-
-    if page.category || page.tag
-      - var tag = page.category || page.tag;
-
-      h1.label-title
-        = __('reading_label', '')
-        a#selectedTag
-          != tag
-    else
-      != tagcloud({min_font: 12, max_font: 18, amount: 30, orderby: 'count'})
-
+        h1.label-title
+          = __('reading_label', '')
+          a#selectedTag
+            != tag
+      else
+        != tagcloud({min_font: 12, max_font: 18, amount: 30, orderby: 'count'})
+    
 
   .post
     .post-archive

@@ -66,6 +66,6 @@ mixin thumbnailPNG(title)
 
 mixin thumbnail(post)
   if post.thumbnail
-    img(src= post.thumbnail, class='nofancybox')
+    img.nofancybox(src= post.thumbnail)
   else
     +thumbnailPNG(post.title)

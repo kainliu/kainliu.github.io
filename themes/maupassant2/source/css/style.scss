@@ -18,6 +18,13 @@ specific font stacks to ensure the greatest OS/browser compatibility.
 //     border: 1px solid #000;
 // }
 
+
+$primaryGray: #F3F6F7;
+$tagGray: #f1f1f1;
+$primaryBlue: #3498DB;
+$secondaryBlue: #E7F3FB;
+// $primaryGray: #F7F8F8;
+
 html,
 button,
 input,
@@ -47,7 +54,7 @@ body {
 .content_container {
     // padding-right: 50px;
     padding-right: 0;
-    padding-top: 20px;
+    // padding-top: 20px;
 }
 
 a,
@@ -133,18 +140,17 @@ div {
             font-size: 18px; // border-radius: 4px;xw
             // border: 1px solid transparent;
             &:hover {
-                // border-bottom-color: #444;
-                background: #f1f1f1;
+                background: $primaryGray; 
                 border-top-right-radius: 3px;
                 border-top-left-radius: 3px;
             }
             &.current {
                 // border: 1px solid #ddd;
                 // border-bottom-color: #fff;
-                // background: #3498DB;
+                // background: $primaryBlue;
                 // background: #f7f8f8;
                 padding-bottom: 6px; // border-radius: 0;
-                border-bottom: 2px solid #3498DB;
+                border-bottom: 2px solid $primaryBlue;
                 .fa {
                     // color: #2980B9;
                     // font-weight: bold;
@@ -189,14 +195,14 @@ div {
             display: block;
             font-weight: normal;
         }
-        .tagcloud {
-            margin-top: 10px;
-            a {
-                line-height: 1.2;
-                padding: 5px 0;
-                display: block;
-            }
-        }
+        // .tagcloud {
+        //     margin-top: 10px;
+        //     a {
+        //         line-height: 1.2;
+        //         padding: 5px 0;
+        //         display: block;
+        //     }
+        // }
         ul {
             list-style: none;
             padding: 0;
@@ -241,7 +247,7 @@ div {
 /* title for search result or tagged posts*/
 
 .label-title {
-    margin-top: 1.1em;
+    // margin-top: 1.1em;
     font-size: 20px;
     font-weight: normal;
     color: #888;
@@ -249,33 +255,32 @@ div {
         vertical-align: middle;
         margin-left: 0.5em;
         margin-bottom: 4px;
-        font-size: 15px;
+        font-size: 18px;
     }
 }
 
 #index-posts {}
 
-#index-post-first {
-    // padding: 20px 0;
-    .post-container{
-        overflow: hidden;
-    }
-    // .post-title {
-    //     a {
-    //         color: #fff;
-    //     }
-    // }
-}
 
-.screen-wide-bg {
-    height: 330px;
-    margin-top: -330px;
+.screen-wide-bg{
+    overflow: hidden;
+}
+.screen-wide-bg:before,
+.screen-wide-bg:after {
+    content: '';
+    height: 800px;
     position: absolute;
     left: 0;
     right: 0;
-    background: #f3f6f7; // #3498db;
-    z-index: -1;
+    z-index: -99;
 }
+.screen-wide-bg:before{
+    background-color: $primaryGray;
+}
+.screen-wide-bg:after{
+    background-color: #fff;
+}
+
 
 .index-post {
     // border: 2px solid #fff;
@@ -284,7 +289,8 @@ div {
     margin: 0 0 20px 0;
     padding: 10px;//!important;
     .post-title {
-        padding: 0;
+        padding: 0 !important;
+        margin: 15px 0 !important;
         font-size: 22px !important;
         line-height: 1.5em !important;
         text-align: center !important;
@@ -308,31 +314,56 @@ div {
 }
 
 .tagcloud {
-    margin: 20px 0 40px;
-    a {
-        font-family: 'Imprima', sans-serif;
-        border-bottom: 1px solid #DDDDDD;
-        border-right: 1px solid #DDDDDD;
-        margin-right: 2px;
-        margin-bottom: 10px;
-        vertical-align: bottom;
-        text-transform: capitalize;
-        background-color: #f7f8f8;
-        padding: 3px 0.5em;
-        border-radius: 3px;
-        display: inline-block;
-        &:before {
-            font-family: "FontAwesome";
-            content: "\f02b";
-            padding-right: 0.3em;
-        }
+    margin: 20px 0;
+    padding: 15px 0;
+}
+.tags {
+    margin: 15px 0;
+}
+
+.tagcloud a, 
+.tags a {
+    font-family: 'Imprima', sans-serif;
+    // border: 1px solid #DDDDDD;
+    // border-bottom: 1px solid #DDDDDD;
+    // border-right: 1px solid #DDDDDD;
+    margin-right: 2px;
+    margin-bottom: 10px;
+    vertical-align: bottom;
+    text-transform: capitalize;
+    // background-color: $tagGray;
+    // border-radius: 3px;
+    padding: 3px 5px;
+    display: inline-block;
+    &:before {
+        font-family: "FontAwesome";
+        content: "\f02b";
+        padding-right: 0.3em;
     }
 }
 
+
 .post {
     padding: 0;
+    .post-header{
+        margin: 60px 0;
+        padding-bottom: 30px;
+    }
+    .post-thumbnail{
+        position: relative;
+        float: right;
+        img{
+            position: absolute;
+            right: 10px;
+            top: 0;
+            height: 150px;
+            z-index: -1;
+            filter: blur(3px);
+            opacity: 0.4;
+        }
+    }
     .post-title {
-        margin: 1em 0 0.5em; // color: #555;
+        margin: 50px 0 10px;
         text-align: left;
         font: normal 35px/1.1 "Asar", "Times New Roman", Georgia, Times, sans-serif;
         a {
@@ -347,28 +378,23 @@ div {
     }
     .post-meta {
         padding: 0;
-        margin: 15px 0;
-        color: #6E7173;
-        display: inline-block; // text-indent: .15em;
-        // &:before {
-        //       font-family: "FontAwesome";
-        //       content: "\f073";
-        //       padding-right: 0.3em;
-        // }
-        // .category {
-        //     &:before {
-        //       font-family: "FontAwesome";
-        //       content: "\f07c";
-        //       padding-right: 0.3em;
-        //     }
-        // }
-        // #busuanzi_value_page_pv {
-        //     &:before {
-        //       font-family: "FontAwesome";
-        //       content: "\f024";
-        //       padding-right: 0.3em;
-        //     }
-        // }
+        margin: 40px 0 40px;
+        .author{
+            margin-right: 1em;
+            &:before {
+                font-family: "FontAwesome";
+                content: "\f2be";
+                padding: 3px 5px;
+            }
+        }
+        .date{
+            margin-right: 1em;
+            &:before {
+                font-family: "FontAwesome";
+                content: "\f0f4";
+                padding: 3px 5px;
+            }
+        }
     }
     .ds-thread-count {
         padding: 0;
@@ -431,7 +457,7 @@ div {
             display: inline-block;
             margin: 0 0px;
             padding: 0 3px;
-            background: #f7f8f8;
+            background: $primaryGray;
         }
         blockquote {
             color: black;
@@ -478,7 +504,7 @@ div {
                 display: inline-block;
                 margin: 0 5px;
                 padding: 0px 5px;
-                background: #f7f8f8;
+                background: $primaryGray;
             }
             a {
                 color: #01579f;
@@ -492,30 +518,11 @@ div {
         .verticalCodeBlocks {
             vertical-align: top;
             display: inline-block;
-            width: 48.5%;
-            margin-right: 0.5%;
+            width: 49%;
+            border-right: 5px solid #fff;
+            
             br {
                 display: none;
-            }
-        }
-    }
-    .tags {
-        margin: 15px 0;
-        a {
-            font-family: 'Imprima', sans-serif;
-            display: inline-block;
-            margin-right: .5em;
-            margin-bottom: .5em;
-            background-color: #f7f8f8;
-            border-bottom: 1px solid #DDDDDD;
-            border-right: 1px solid #DDDDDD; // color: #000;
-            padding: 3px 5px;
-            border-radius: 3px;
-            text-transform: capitalize;
-            &:before {
-                font-family: "FontAwesome";
-                content: "\f02b";
-                padding-right: 0.3em;
             }
         }
     }
@@ -587,7 +594,7 @@ div {
 
 .post-archive {
     font-size: 15px;
-    line-height: 2;
+    line-height: 2.5;
     margin-bottom: .8em;
     h2 {
         margin: 2em 0 1em;
@@ -602,13 +609,13 @@ div {
         font-family: "Asar", monospace;
         font-size: 14px;
         display: inline-block;
-        vertical-align: middle;
         margin-right: 10px;
         padding: 0 5px;
         border-radius: 3px;
-        background: #f1f1f1;
+        background: $tagGray;
         width: 50px;
         text-align: center;
+        line-height: 1.8;
     }
 }
 
@@ -621,7 +628,7 @@ div {
 @media print,
 screen and (max-width: 48em) {
     .body_container {
-        padding: 0 30px;
+        padding: 0 20px;
     }
     .content_container {
         // padding-right: 15px;
@@ -659,7 +666,7 @@ screen and (max-width: 48em) {
 @media print,
 screen and (max-width: 35.5em) {
     .body_container {
-        padding: 0 20px;
+        padding: 0 10px;
     }
     .content_container {
         padding-right: 0;
@@ -1102,9 +1109,9 @@ screen and (min-width: 48em) {
     a {
         padding: 9px 15px;
         font-size: 12px;
-        border: 1px solid #3498DB;
+        border: 1px solid $primaryBlue;
         border-radius: 3px;
-        color: #3498DB; // background: #F8F8F8;
+        color: $primaryBlue; // background: #F8F8F8;
         background: #ffffff;
         &:before {
             font-family: "FontAwesome";
@@ -1116,7 +1123,7 @@ screen and (min-width: 48em) {
         //     padding-left: 0.3em;
         // }
         &:hover {
-            background: #E7F3FB;
+            background: $secondaryBlue;
         }
     }
 }
@@ -1276,7 +1283,7 @@ screen and (min-width: 48em) {
 
 figure.highlight,
 .codeblock {
-    background: #f7f8f8;
+    background: $primaryGray;
     margin: 10px 0;
     line-height: 1.1em;
     color: #333;
@@ -1311,7 +1318,7 @@ figure.highlight,
         font-size: 13px;
         padding: 0 15px 20px;
         margin: 0;
-        background: #f7f8f8;
+        background: $primaryGray;
         color: #999999;
         a {
             float: right;
@@ -1319,7 +1326,7 @@ figure.highlight,
         }
     } // Gutter which contains line numbers
     .gutter {
-        background: #f7f8f8;
+        background: $primaryGray;
         border-right: 1px solid #e6e6e6;
         padding: 0.3em 15px;
         .line {
@@ -1330,10 +1337,16 @@ figure.highlight,
         padding: 0.3em 15px 0.3em 1em;
         width: 100%;
         pre {
-            max-width: 700px;
-            overflow-x: auto;
+            // max-width: 700px;
+            max-width: 100%;
+            overflow-x: hidden;
             overflow-y: hidden;
+            &:hover,
+            &:focus{
+                overflow-x: auto;
+            }
         }
+        
     } // All lines in gutter and code container
     .line {
         height: 1.3em;
@@ -1857,9 +1870,9 @@ figure.highlight,
     }
     a {
         display: inline-block;
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-size: contain;
+        // background-repeat: no-repeat;
+        // background-position: center center;
+        // background-size: contain;
         max-width: 100%;
         position: relative;
         overflow: hidden;
@@ -1867,17 +1880,19 @@ figure.highlight,
         span {
             color: #000;
             min-width: 300px;
-            max-width: 100%; // text-align: center;
-            line-height: 30px; // color: #555;
+            max-width: 100%; 
+            line-height: 30px; 
+            // text-align: center;
+            // color: #555;
             // border: 1px solid #ddd;
             // border-radius: 3px;
-            float: left; // margin: 40px 0;
-            margin: 80px 0 0 0;
-            padding: 40px 5px 0; // background-color: #F8F8F8;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0, #fff 60px, #fff); // border-radius: 4px;
+            float: left; 
+            margin: 0;
+            padding: 40px 0 5px; 
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0, #fff 75px, #fff); // border-radius: 4px;
             font-family: "Asar", "Times New Roman", Georgia, Times, sans-serif;
             position: relative;
-            font-size: 18px;
+            font-size: 22px;
             text-overflow: ellipsis;
             white-space: nowrap;
             overflow: hidden;
@@ -1888,10 +1903,10 @@ figure.highlight,
                 top: 0;
                 font-size: 15px;
                 line-height: 24px;
-                color: #3498DB;
+                color: $primaryBlue;
                 letter-spacing: 1px;
                 padding: 2px 6px;
-                border: 1px solid #3498db;
+                border: 1px solid $primaryBlue;
                 border-radius: 3px;
             }
         }
@@ -1901,6 +1916,7 @@ figure.highlight,
                 left: 0;
                 content: "\f0d9  PREV"; // text-align: left;
             }
+            
         }
         &.next {
             // float: left;
@@ -1909,19 +1925,27 @@ figure.highlight,
                 right: 0;
                 content: "NEXT  \f0da"; // text-align: right;
             }
+            
         }
+        &.no-more{
+            span:before{
+                text-decoration: line-through;
+            }
+        }
+        
         &:hover {
             color: #222;
             span:before {
-                background: #E7F3FB;
+                background: $secondaryBlue;
             }
         }
         i {
             img {
-                height: 150px;
+                height: 120px;
             }
+            filter: blur(2px);
             position: absolute;
-            line-height: 150px;
+            line-height: 90px;
             top: 0;
             left: 0;
             right: 0;
@@ -2015,7 +2039,7 @@ table {
     }
     tr {
         &:nth-child(2n) {
-            background: #f7f8f8;
+            background: $primaryGray;
         }
     }
 }

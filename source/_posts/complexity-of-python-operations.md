@@ -63,7 +63,7 @@ In all these examples, `N = len(data-type)`. The operations are organized by inc
 |Reverse	     | l.reverse()  | O(N)	     |             |
 |Iteration     | for v in l:  | O(N)       |             |
 |Sort          | l.sort()     | O(N Log N) | key/reverse mostly doesn't change |
-|Multiply      | k\*l         | O(k N)     | 5\*l : O(N) <br/> <span style="color:gray;"><font style="text-decoration: line-through;">len(l)*l : O(N^2)</font> (Comments: correct but confusing)</span>|
+|Multiply      | k\*l         | O(k N)     | 5\*l : O(N) <br/> <span style="color:gray;"><font style="text-decoration: line-through;">len(l)*l : O(N^2)</font> (Kai's comment: correct but confusing)</span>|
 
 Tuples support all operations that do not mutate the data structure (and with the same complexity classes).
 
@@ -326,5 +326,12 @@ Here, Implementation 3 has the lowest complexity class for the combined operatio
   $O(N)\*O(Log N) + O(10)\*O(Log N)$ = $O(N LogN) + O(LogN)$ = $O(N LogN)$
 
 Here, Implementation 1 has the lowest complexity for the combined operations. That makes sense, as the operation done O(N) times (add) is very simple (add to the end of a list/the front of a linked list is O(1)) and the operation done a constant number of times (10, independent of N) is the expensive operation (remove, which is O(N)). It even beats the complexity of Implementation 3. So, as N gets bigger, implementation 1 will eventually become faster than the other two for the "find the 10 biggest" task.
+
+> **Kai's comment**:
+>
+> For problem 2, the author came to a conclusion that, the brutal loop through the $N$ values for $K$ times, performs better than a heap based solution. It violates my intuition. 
+> The questionable part is the cost of building a heap: $O(N LogN)$. The cost of `heapsort` is the same, and by heapsorting an array, all the elements are sorted. Then why should we perform an operation, that is close to heapsort, to find top $K$ elements?
+> I will discuss this in another blog [Solve Biggest K Problem By Heap, In Right Way](/posts/solve-biggest-k-problem-by-heap-in-right-way/)
+
 
 So, the bottom line here is that sometimes there is NOT a "best all the time" implementation for a data structure. We need to know what problem we are solving (the complexity classes of all the operations in various implementations and the number of times we must do these operations) to choose the most efficient implementation for solving the problem.

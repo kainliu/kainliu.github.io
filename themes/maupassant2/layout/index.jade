@@ -14,45 +14,32 @@ block content
 
       - counter = counter + 1
       if counter == 1
-        div.post.index-post.pure-u-md-4-4#index-post-first
-          div.post-container
-            
-              .post-content
-                a(href=url_for(post.path))
-                  +thumbnail(post)
-        
-              h3.post-title
-                a(href=url_for(post.path))
-                  +title(post)
-              if post.description
-                .post-desc
-                  != post.description
-              else
-                .post-desc
-                  - var content = ''
-                  - var tags = post.tags.toArray()
-                  - tags.forEach(function(val, key){
-                      - n = val.name
-                      - if (key == 0) { content += (n.charAt(0).toUpperCase() + n.slice(1)) }
-                      - else if (key == tags.length - 1) { content += (' and ' + n + '.')  }
-                      - else {content += (', ' + n) }
-                  - })
-                    // - console.log(tag)
-                  != content
-              div(class='readmore')
-                a(href=url_for(post.path))= readingTime(post.content)
+        div.post.index-post.pure-u-md-4-4
           div.screen-wide-bg
-
-          script.
-            $(document).ready(function(){
-              
-              $(".screen-wide-bg").each(function(){
-                let h = $(this).parent().find(".post-container").height()
-                //- console.log($(this).parent().find(".post-content"))
-                //- console.log(h)
-                $(this).css({"height": h, "margin-top": -h})
-              })
-            })
+            .post-content
+              a(href=url_for(post.path))
+                +thumbnail(post)
+      
+            h3.post-title
+              a(href=url_for(post.path))
+                +title(post)
+            if post.description
+              .post-desc
+                != post.description
+            else
+              .post-desc
+                - var content = ''
+                - var tags = post.tags.toArray()
+                - tags.forEach(function(val, key){
+                    - n = val.name
+                    - if (key == 0) { content += (n.charAt(0).toUpperCase() + n.slice(1)) }
+                    - else if (key == tags.length - 1) { content += (' and ' + n + '.')  }
+                    - else {content += (', ' + n) }
+                - })
+                  // - console.log(tag)
+                != content
+            div(class='readmore')
+              a(href=url_for(post.path))= readingTime(post.content)
 
       else
         div.post.index-post.pure-u-md-1-2

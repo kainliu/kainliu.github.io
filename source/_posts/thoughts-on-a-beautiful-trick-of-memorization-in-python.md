@@ -13,7 +13,7 @@ description: Using function-level shared variables as memorizers.
 
 ---
 
-This trick is using a function argument to memorize recursive states of expensive calculations ([python docs](https://docs.python.org/2/faq/programming.html#why-are-default-values-shared-between-objects)).
+This trick is using a function argument to memorize recursive states of expensive calculations ( [python docs](https://docs.python.org/2/faq/programming.html#why-are-default-values-shared-between-objects) ).
 
 An example is to improve fibonacci calculator as follows,
 
@@ -64,6 +64,7 @@ def run(n):
 
 def walk(n):            # What if I do not want to share cache with other functions?
     ....
+
 ```
 
 I can not answer these questions with 100 percent confidence.
@@ -283,7 +284,7 @@ The `Big O` of `fib` is $O(2^n)$ ([stackoverflow](https://stackoverflow.com/ques
 
 Memorization contributes a lot, and actually it is the core of *Dynamic Programming*. Some would like to introduce DP as,
 
-> **Top-down Dynamic Programming** $\approx$ **Divide & Conquer** + **Memorization**
+> **Top-down Dynamic Programming** = **Divide & Conquer** + **Memorization**
 
 And I think this equation explains *Dynamic Programming* better than the name itself.
 
