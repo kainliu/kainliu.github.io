@@ -53,7 +53,7 @@ Of course, maintaining a global variable for storage could also deliver the same
 cache = {}
 
 def run(n):
-    if n in cache:      # Wait.. is it a undefined local variable?
+    if n in cache:      # Is it a undefined local variable?
         ....
 
     if n == MAXIMUM_VALUE:
@@ -62,7 +62,8 @@ def run(n):
     ....
     _cache[n] = result  # Should be okay to update the cache.
 
-def walk(n):            # What if I do not want to share cache with other functions?
+def walk(n):            # What if I do not want to share cache 
+                        # with other functions?
     ....
 
 ```
@@ -89,7 +90,9 @@ const x = new Point(10, 10);  // ECMA5 Javascript
 
 But it takes some efforts to understand its concept of variable scopes.
 
-<div class="verticalCodeBlocks">
+<div class="vertical-col">
+<div class="col">
+
 ```python
 arr = [True]
 def run():
@@ -98,14 +101,15 @@ def run():
 
 run()
 print 'outside:', arr
-```
-```python
+
+------
 inside:  [False]
 outside: [False]
 ```
 </div>
 
-<div class="verticalCodeBlocks">
+<div class="col">
+
 ```python
 arr = [True]
 def run():
@@ -114,18 +118,20 @@ def run():
 
 run()
 print 'outside:', arr
-```
-```python
+
+------
 inside:  [False]
 outside: [True]
 ```
 </div>
 
+</div>
+
 Let's examine the differences.
 
-In the first block, I am actually calling `arr.__setitem__(0, False)`. Python checks `arr` is not defined inside function scope (`local`), and thus continue looking for it in the outside scope (`global`). Successfully finds the `arr` variable, and calls a function to change its first item.  
+In the first block, I am actually calling `arr.__setitem__(0, False)`. Python finds out that `arr` is not defined inside function scope (`local`), and thus continues to look it up in the outside scope (`global`). After successfully locating `arr` in global scope, python calls a function to change the first item of a global variable.
 
-While in the second block, python takes `arr = [False]` as an action to create a local variable.
+In comparison, in the second block, python considers `arr = [False]` as an action to create a local variable.
 
 ```python
 # < global variable scope >
@@ -133,9 +139,11 @@ def run():
     # < local variable scope >
 ```
 
-If we would like to add another result to the `arr`, there are two ways:
+If we would like to add another element to `arr`, there are two ways:
 
-<div class="verticalCodeBlocks">
+<div class="vertical-col">
+<div class="col">
+
 ```python
 arr = [True]
 def run():
@@ -144,14 +152,15 @@ def run():
 
 run()
 print 'outside:', arr
-```
-```python
+
+------
 inside:  [True, False]
 outside: [True, False]
 ```
 </div>
 
-<div class="verticalCodeBlocks">
+<div class="col">
+
 ```python
 arr = [True]
 def run():
@@ -160,24 +169,28 @@ def run():
 
 run()
 print 'outside:', arr
-```
-```python
-UnboundLocalError: local variable 'arr'
-                   referenced before assignment
+
+------
+UnboundLocalError: 
+local variable 'arr' referenced before assignment
 ```
 </div>
+</div>
 
-The first block is easy to understand given previous example -- `arr.extend` is just like `arr.__setitem__`.
+The first block is easy to understand, since calling a function `arr.extend` is just like `arr.__setitem__` in the previous example.
+Meanwhile, in second block, `arr += [False]` equals to `arr = arr + [False]`. 
 
-Meanwhile, in second block, `arr += [False]` equals to `arr = arr + [False]`. One principle here in python is,
+One principle here in python is,
 
 > Anything being assigned ( `x = ...` ) is taken as a local variable in `function`.
 
-On the left side of equation, with such principle, python judges `arr` is a local variable. On the right side of equation, it throws an error because of a loop of variable assignment.
+At the left side of equation, on such principle, python judges `arr` is a local variable. At the right side of equation, it throws an error because of a loop of variable assignment.
 
 Our original purpose is to take `arr` as a global variable. And we have to add a line to declare such intention.
 
-<div class="verticalCodeBlocks">
+<div class="vertical-col">
+<div class="col">
+
 ```python
 arr = [True]
 def run():
@@ -188,14 +201,15 @@ def run():
 
 run()
 print 'outside:', arr
-```
-```python
+
+------
 inside:  [True, False]
 outside: [True, False]
 ```
 </div>
 
-<div class="verticalCodeBlocks">
+<div class="col">
+
 ```python
 arr = [True]
 def run():
@@ -206,16 +220,19 @@ def run():
 
 run()
 print 'outside:', arr
-```
-```python
+
+------
 inside:  [False]
 outside: [True]
 ```
 </div>
+</div>
 
 ### Looking around on Javascript
 
-<div class="verticalCodeBlocks">
+<div class="vertical-col">
+<div class="col">
+
 ```javascript
 // IT'S Javascript!
 var a = true;
@@ -228,14 +245,15 @@ function run(){
 
 run()
 console.log('outside:', a)
-```
-```python
+
+------
 inside:  false
 outside: false
 ```
 </div>
 
-<div class="verticalCodeBlocks">
+<div class="col">
+
 ```javascript
 // IT'S Javascript!
 var a = true;
@@ -248,14 +266,15 @@ function run(){
 
 run()
 console.log('outside:', a)
-```
-```python
+
+------
 inside:  false
 outside: true
 ```
 </div>
+</div>
 
-In comparison, it's easy to understand why Javascript shocks so many engineers with non-front-end background, by placing more weight on `easy to run` over `global variable safety`. While in Baidu (one of the largest search companies in the world, [wiki](https://en.wikipedia.org/wiki/Baidu)), I have gained more than enough experience in debugging on web pages, where global variables are contaminated by careless coders.
+In comparison, it's easy to understand why javascript shocks so many engineers with non-front-end background, by placing more weight on `easy to run` over `global variable safety`. While in Baidu (one of the largest search companies, [wiki](https://en.wikipedia.org/wiki/Baidu)), I have gained more than enough experience in debugging on web pages, where global variables are contaminated by careless coders.
 
 
 ## Memorization
@@ -275,8 +294,8 @@ stop = timer()
 time1 = pause - start
 time2 = stop - pause
 print '%6f / %6f = %d' % (time1, time2, time1 / time2)
-```
-```python
+
+------
 0.311446 / 0.000061 = 5102
 ```
 
@@ -292,30 +311,44 @@ And I think this equation explains *Dynamic Programming* better than the name it
 
 Consider following example:
 
-<div class="verticalCodeBlocks">
+<div class="vertical-col">
+<div class="col">
+
 ```python
 def store(ele, arr = []):
 
   arr.append(ele)
   return arr
 
-print store(1) == [1]    # output: True
-print store(2) == [2]    # output: False
-print store.__defaults__ # output: ([1, 2],)
+print store(1) == [1]
+print store(2) == [2]
+print store.__defaults__
+
+------
+True
+False
+([1, 2],)
 ```
 </div>
 
-<div class="verticalCodeBlocks">
+<div class="col">
+
 ```python
 def store(ele, arr = None):
   if not arr: arr = []
   arr.append(ele)
   return arr
 
-print store(1) == [1]    # output: True
-print store(2) == [2]    # output: True
-print store.__defaults__ # output: (None,)
+print store(1) == [1]
+print store(2) == [2]
+print store.__defaults__ 
+
+------
+True
+True
+(None,)
 ```
+</div>
 </div>
 
 As the [Python docs](https://docs.python.org/2/faq/programming.html#why-are-default-values-shared-between-objects) points out that,
@@ -342,7 +375,7 @@ Looking at `fib_cache(..., _cache = {})` again, it takes full advantage of such 
 
 -----
 
-I will end this post with correcting the mistakes in the previous global solution, this time with 100 precent confidence.
+I will end this post by improving the global solution as mentioned in the beginning.
 
 ```python
 """ Global variable solution """
