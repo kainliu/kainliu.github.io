@@ -1898,7 +1898,7 @@ figure.highlight,
             float: left; 
             margin: 0;
             padding: 60px 0 0; 
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0, #fff 70px, #fff); // border-radius: 4px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 50px, #fff 80px, #fff);
             font-family: "Asar", "Times New Roman", Georgia, Times, sans-serif;
             position: relative;
             font-size: 22px;
@@ -1950,14 +1950,16 @@ figure.highlight,
         }
         i {
             img {
+                padding-top: 5px;
                 height: 100px;
             }
             filter: blur(2px);
             position: absolute;
-            top: 5px;
+            top: 0;
             left: 0;
             right: 0;
             bottom: 10px;
+            overflow: hidden;
             z-index: -1;
             vertical-align: middle;
             text-align: center;

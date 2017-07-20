@@ -6,7 +6,7 @@ tag:
 - python
 - fibonacci
 - memorization
-- variable scope
+- scope
 mathjax: true
 thumbnail: /images/transparency.png
 description: Using function-level shared variables as memorizers.
