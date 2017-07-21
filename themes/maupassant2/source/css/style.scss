@@ -267,6 +267,7 @@ div {
 .screen-wide-bg:before,
 .screen-wide-bg:after {
     content: '';
+    // border-top: 1px solid #000;
     height: 800px;
     position: absolute;
     left: 0;
@@ -280,13 +281,18 @@ div {
     background-color: #fff;
 }
 
+#post_nav_container{
+    margin: 100px 0;
+    &:before,
+    &:after,{
+        height: 300px;
+    }
+}
+
 
 .index-post {
-    // border: 2px solid #fff;
-    // border-radius: 10px;
-    // background: #f5f5f5;
     margin: 0 0 20px 0;
-    padding: 10px;//!important;
+    
     .post-title {
         padding: 0 !important;
         margin: 15px 0 !important;
@@ -308,7 +314,13 @@ div {
         text-align: center !important;
         img {
             height: 140px;
+            transition: transform 0.3s;
+            transform: rotate(0deg);
         }
+    }
+    &:hover .post-content img{
+        transition: transform 0.3s;
+        transform: rotate(8deg);
     }
 }
 
@@ -334,6 +346,7 @@ div {
     // border-radius: 3px;
     padding: 3px 5px;
     display: inline-block;
+    color: #444;
     &:before {
         font-family: "FontAwesome";
         content: "\f02b";
@@ -343,7 +356,7 @@ div {
 
 
 .post {
-    padding: 0;
+    
     .post-header{
         margin: 60px 0;
         padding-bottom: 30px;
@@ -1864,9 +1877,10 @@ figure.highlight,
 
 .post-nav {
     overflow: hidden;
-    margin-top: 40px;
-    margin-bottom: 40px;
-    padding: 20px 0;
+    display: block;
+    // margin-top: 40px;
+    // margin-bottom: 40px;
+    padding: 10px 0;
     white-space: nowrap; // border-top: 1px solid #eee;
     // border-bottom: 1px solid #eee;
     .pure-u-md-1-2 {
@@ -1885,7 +1899,7 @@ figure.highlight,
         max-width: 100%;
         position: relative;
         overflow: hidden;
-        margin-bottom: 30px;
+        margin: 15px 0;
         span {
             color: #000;
             min-width: 100px;
@@ -1898,7 +1912,8 @@ figure.highlight,
             float: left; 
             margin: 0;
             padding: 60px 0 0; 
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 50px, #fff 80px, #fff);
+            background: linear-gradient(180deg, rgba(243, 246, 247, 0.1) 50px, #F3F6F7 80px, #F3F6F7);
+            // background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 50px, #fff 80px, #fff);
             font-family: "Asar", "Times New Roman", Georgia, Times, sans-serif;
             position: relative;
             font-size: 22px;
@@ -1919,6 +1934,12 @@ figure.highlight,
                 border-radius: 3px;
             }
         }
+        &:hover {
+            color: #222;
+            span:before {
+                background: $secondaryBlue;
+            }
+        }
         &.pre {
             text-align: left;
             span:before {
@@ -1937,17 +1958,23 @@ figure.highlight,
             
         }
         &.no-more{
+            cursor: default;
+            span{
+                color: #888;
+            }
             span:before{
+                color: #888;
+                border-color: #888;
                 text-decoration: line-through;
+            }
+            &:hover{
+                span:before{
+                    background: transparent;
+                }
             }
         }
         
-        &:hover {
-            color: #222;
-            span:before {
-                background: $secondaryBlue;
-            }
-        }
+        
         i {
             img {
                 padding-top: 5px;
