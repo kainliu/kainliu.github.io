@@ -12,7 +12,8 @@ timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: https://kainliu.github.io
+# url: https://kainliu.github.io
+url: http://westworld.name
 root: /
 permalink: posts/:title/
 permalink_defaults:
@@ -72,3 +73,10 @@ deploy:
   type: git
   repo: https://github.com/kainliu/kainliu.github.io.git
   branch: master
+
+
+# Feed
+feed:
+  type: atom
+  path: atom.xml
+  limit: 20
