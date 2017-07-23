@@ -16,7 +16,7 @@ Let's start with the distribution of colors in a picture.
 
 The color distribution reflects how the pixels are colored. In the space of `RGB`(red, green, blue), each pixel is represented by 24 bits (8 bits for red, 8 for green and 8 for blue). For example, given 8 bits to describe how red it is, there are 256 ($2^8$) different variations. In total, there are 16,777,216 ($256^3$) different kinds of `RGB` combinations, which already reaches [the limit of human eyes](https://en.wikipedia.org/wiki/Color_depth#True_color_.2824-bit.29).
 
-![A parrot on a tree. The right side is the RGB(red, green, blue) distribution.](https://raw.githubusercontent.com/kainliu/Prism/master/screenshot/bird.png?width=50)
+![A parrot on a tree. The right side is the RGB(red, green, blue) distribution.](https://github.com/kainliu/Prism/raw/master/screenshot/bird.png?width=50)
 
 To find similar images, the basic idea is that **similar images share similar color distributions**. To quantify similarities, it's straightforward to make use of pixel counts to build up the profiles, which we call `signatures`.
 
@@ -56,7 +56,7 @@ When we hash all colors into several buckets, it is intuitional to see similar c
 
 If we increase the number of buckets, the signatures will be longer. For example, a 4-segmented signature contains 64 ($4^3$) integers.
 
-![The table shows the 4-segmented result of <i>A parrot on a tree</i>. <br/> The vector of pixel counts (<i>#Pixels</i>) is the signature.](/images/bird-color-table.png)
+![The table shows the 4-segmented result of <i>A parrot on a tree</i>. <br/> The vector of pixel counts (<i>#Pixels</i>) is the signature.](/images/bird-color-table.png?width=0.5)
 
 
 
@@ -267,7 +267,7 @@ Tuning parameters to find the optimum balance between accuracy and efficiency is
 
 For example, in general, the `r-squared` of sketch similarity and signature similarity rises with number of vectors. More random vectors can provide better estimation of the similarity, but at the same time cost more time and memory. Thus experiments are carried out as follows:
 
-![Experiments of tuning the number of random vectors. ](https://raw.githubusercontent.com/kainliu/Prism/master/screenshot/vectors-n.jpg?width=60)
+![Experiments of tuning the number of random vectors. ](https://github.com/kainliu/Prism/raw/master/screenshot/vectors-n.jpg?width=50)
 
 From the above graphs, we can select $k=256$ to get a r-squared greater than $0.9$ while keeping efficiency.
 

@@ -23,7 +23,13 @@ $primaryGray: #F3F6F7;
 $tagGray: #f1f1f1;
 $primaryBlue: #3498DB;
 $secondaryBlue: #E7F3FB;
-// $primaryGray: #F7F8F8;
+
+$animationOn: true;
+
+$titleFont:  "Asar", "Times New Roman", Georgia, Times, sans-serif;
+$descFont:  "Imprima",  Georgia, Times, sans-serif;
+$postFont:  "Lucida Grande", "Helvetica Neue", Arial, "Hiragino Sans GB", "STHeiti", "Microsoft YaHei", "WenQuanYi Micro Hei", SimSun, sans-serif;
+
 
 html,
 button,
@@ -32,13 +38,13 @@ select,
 textarea,
 .pure-g [class *="pure-u"] {
     /* Set your content font stack here: */
-    font-family: "Lucida Grande", "Helvetica Neue", Helvetica, "Segoe UI", "Hiragino Sans GB", "Source Han Sans CN", "Microsoft YaHei", "STHeiti", "WenQuanYi Micro Hei", sans-serif;
+    font-family: $postFont;
 }
 
 body {
     background-color: #ffffff;
     color: #222;
-    font-family: "Lucida Grande", "Helvetica Neue", Arial, "Hiragino Sans GB", "STHeiti", "Microsoft YaHei", "WenQuanYi Micro Hei", SimSun, sans-serif;
+    font-family: $postFont;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-size: 14px;
@@ -108,8 +114,9 @@ div {
             overflow: hidden;
         }
         #logo {
-            // font: bold 38px/1.12 "Times New Roman", Georgia, Times, sans-serif;
-            font: normal 25px/1.1 "Asar", "Times New Roman", Georgia, Times, sans-serif;
+            font-weight: normal;
+            font-size: 25px;
+            font-family: $titleFont;
             color: #000;
             span {
                 height: 40px !important;
@@ -290,37 +297,91 @@ div {
 }
 
 
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translate3d(0, 10px,0)
+    }
+
+    to {
+        opacity: 1;
+        transform: none
+    }
+}
+
+.primaryFadeInUp{
+    @if $animationOn == true {
+        opacity: 0;
+        animation: fadeInUp 0.3s ease 0.3s forwards;
+    }
+    @else {
+        // leave a useless line to avoid compilation error
+        font-family: inherit;
+    }
+}
+.secondaryFadeInUp{
+    @if $animationOn == true  {
+        opacity: 0;
+        animation: fadeInUp 0.6s ease 0.6s forwards;
+    }
+    @else {
+        font-family: inherit;
+    }
+}
+
 .index-post {
-    margin: 0 0 20px 0;
+    margin: 0 0 40px 0;
     
-    .post-title {
-        padding: 0 !important;
-        margin: 15px 0 !important;
-        font-size: 22px !important;
-        line-height: 1.5em !important;
-        text-align: center !important;
-    }
-    .post-desc {
-        /*border-top: 1px solid #ddd;*/
-        font-size: 14px !important;
-        line-height: 1.5em !important;
-        font-weight: normal; // padding: 10px 15px !important;
-        text-align: center !important;
-    }
     .post-content {
         margin: 15px !important;
         padding: 0px !important;
-        background-color: transparent !important; // border-radius: 5px;
+        background-color: transparent !important; 
         text-align: center !important;
+
+        @extend .primaryFadeInUp;
+
         img {
             height: 140px;
             transition: transform 0.3s;
-            transform: rotate(0deg);
+            transform: rotate(0deg) scale(1);
         }
     }
     &:hover .post-content img{
         transition: transform 0.3s;
-        transform: rotate(8deg);
+        transform: rotate(8deg) scale(0.95);
+    }
+
+    .post-title {
+        margin: 15px 0;
+        padding: 0;
+        font-family: $titleFont;
+        line-height: 1.5em;   
+        font-size: 22px;
+        font-weight: normal;
+        text-align: center;
+        
+        @extend .secondaryFadeInUp;
+    }
+    .post-desc {
+        font-family: 'Imprima', sans-serif;
+        font-size: 15px;
+        line-height: 1.5em;
+        font-weight: normal; 
+        text-align: center;
+
+        @extend .secondaryFadeInUp;
+    }
+    .readmore {
+        @extend .secondaryFadeInUp;
+    }
+}
+
+.archive{
+    .tagcloud{
+        @extend .primaryFadeInUp;
+    }
+    .post-archive{
+        @extend .secondaryFadeInUp;
     }
 }
 
@@ -355,11 +416,25 @@ div {
 }
 
 
-.post {
+.post{
     
     .post-header{
         margin: 60px 0;
         padding-bottom: 30px;
+    }
+    
+    .post-title {
+        margin: 50px 0 10px;
+        text-align: left;
+        font-weight: normal;
+        font-size: 35px;
+        font-family: $titleFont;
+        line-height: 1.5em;        
+        a {
+            color: #555;
+        }
+        
+        @extend .primaryFadeInUp;
     }
     .post-thumbnail{
         position: relative;
@@ -374,24 +449,16 @@ div {
             opacity: 0.4;
         }
     }
-    .post-title {
-        margin: 50px 0 10px;
-        text-align: left;
-        font: normal 35px/1.1 "Asar", "Times New Roman", Georgia, Times, sans-serif;
-        line-height: 1.5em;        
-        a {
-            color: #555;
-        }
-    }
     .post-desc {
-        // font: 18px/1.1 "Asar","Times New Roman", Georgia, Times, sans-serif;
-        font-family: 'Imprima', sans-serif;
+        font-family: $descFont;
         line-height: 1.3em;
         font-weight: normal;
+        @extend .secondaryFadeInUp;
     }
     .post-meta {
         padding: 0;
         margin: 40px 0 40px;
+        @extend .secondaryFadeInUp;
         .author{
             margin-right: 1em;
             &:before {
@@ -413,7 +480,7 @@ div {
         padding: 0;
         margin: 15px 0 0;
         color: #6E7173;
-        float: right;
+        // float: right;
         display: inline;
         text-indent: .15em;
         &:before {
@@ -425,22 +492,22 @@ div {
             color: #444;
         }
     }
-    .disqus-comment-count {
-        // padding: 0;
-        // margin: 15px 0 0;
-        // color: #6E7173;
-        // float: right;
-        // display: inline;
-        // text-indent: .15em;
-        // &:before {
-        //   font-family: "FontAwesome";
-        //   content: "\f0e5";
-        //   padding-right: 0.3em;
-        // }
-        // &:hover {
-        //     color: #444;
-        // }
-    }
+    // .disqus-comment-count {
+    //     padding: 0;
+    //     margin: 15px 0 0;
+    //     color: #6E7173;
+    //     float: right;
+    //     display: inline;
+    //     text-indent: .15em;
+    //     &:before {
+    //       font-family: "FontAwesome";
+    //       content: "\f0e5";
+    //       padding-right: 0.3em;
+    //     }
+    //     &:hover {
+    //         color: #444;
+    //     }
+    // }
     .post-content {
         background: #fff;
         clear: left;
@@ -452,6 +519,7 @@ div {
         border-radius: 3px; // text-align: justify;
         // text-justify: distribute;
         word-break: normal;
+        @extend .secondaryFadeInUp;
         h2 {
             font-size: 20px;
             margin: 2em 0 1.1em;
@@ -528,6 +596,10 @@ div {
                 }
             }
         }
+        
+
+        // Customized tags:
+        // code columns
         .vertical-col {
             overflow: hidden;
             display: flex;
@@ -543,6 +615,16 @@ div {
             br {
                 display: none;
             }
+        }
+        // important callout
+        center{
+            font-family: $titleFont;
+            font-size: large;
+            box-sizing: border-box;
+            margin: 1.5em 0;
+            padding: 0 0px 0 20px;
+            border-left: 10px solid #555;
+            text-align: left;
         }
         
     }
@@ -619,7 +701,9 @@ div {
     margin-bottom: .8em;
     h2 {
         margin: 2em 0 1em;
-        font: normal 25px/1.1 "Asar", "Times New Roman", Georgia, Times, sans-serif;
+        font-weight: normal;
+        font-size: 25px;
+        font-family: $titleFont;
     }
     .listing {
         list-style: none;
@@ -1889,7 +1973,9 @@ figure.highlight,
     h2 {
         margin: 10px 0 20px 0; // color: #555;
         text-align: left;
-        font: normal 25px/1.1 "Asar", "Times New Roman", Georgia, Times, sans-serif; // border-bottom: 1px solid #eee;
+        font-weight: normal;
+        font-size: 25px;
+        font-family: $titleFont;
     }
     a {
         display: inline-block;
@@ -1914,7 +2000,7 @@ figure.highlight,
             padding: 60px 0 0; 
             background: linear-gradient(180deg, rgba(243, 246, 247, 0.1) 50px, #F3F6F7 80px, #F3F6F7);
             // background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 50px, #fff 80px, #fff);
-            font-family: "Asar", "Times New Roman", Georgia, Times, sans-serif;
+            font-family: $titleFont;
             position: relative;
             font-size: 22px;
             text-overflow: ellipsis;

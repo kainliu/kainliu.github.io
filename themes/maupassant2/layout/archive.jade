@@ -7,30 +7,32 @@ block title
      title= page.tag + ' | ' + config.title
   if page.archive
      title= __('archive') + ' | ' + config.title
+
 block content
 
-  .screen-wide-bg
-    .tagcloud
-      if page.category || page.tag
-        - var tag = page.category || page.tag;
+  .archive
+    .screen-wide-bg
+      .tagcloud
+        if page.category || page.tag
+          - var tag = page.category || page.tag;
 
-        h1.label-title
-          = __('reading_label', '')
-          a#selectedTag
-            != tag
-      else
-        != tagcloud({min_font: 12, max_font: 18, amount: 30, orderby: 'count'})
-    
+          h1.label-title
+            = __('reading_label', '')
+            a#selectedTag
+              != tag
+        else
+          != tagcloud({min_font: 12, max_font: 18, amount: 30, orderby: 'count'})
+      
 
-  .post
-    .post-archive
-        //Use lodash to classify posts. See https://lodash.com/docs#groupBy
-        each posts, year in _.groupBy(page.posts.toArray(), function(p){return -p.date.format('YYYY')})
-          h2= -year
-          ul.listing
-            for post in posts
-              li
-                span.date= post.date.format('MM/DD')
-                a(href=url_for(post.path), title=post.title)
-                  +title(post)
-  include _partial/paginator.jade
+    .post
+      .post-archive
+          //Use lodash to classify posts. See https://lodash.com/docs#groupBy
+          each posts, year in _.groupBy(page.posts.toArray(), function(p){return -p.date.format('YYYY')})
+            h2= -year
+            ul.listing
+              for post in posts
+                li
+                  span.date= post.date.format('MM/DD')
+                  a(href=url_for(post.path), title=post.title)
+                    +title(post)
+    include _partial/paginator.jade

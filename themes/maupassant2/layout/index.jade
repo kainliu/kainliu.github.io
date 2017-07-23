@@ -14,7 +14,7 @@ block content
 
       - counter = counter + 1
       if counter == 1
-        div.post.index-post.pure-u-md-4-4
+        div.index-post.pure-u-md-4-4
           div.screen-wide-bg
             .post-content
               a(href=url_for(post.path))
@@ -42,7 +42,7 @@ block content
               a(href=url_for(post.path))= readingTime(post.content)
 
       else
-        div.post.index-post.pure-u-md-1-2
+        div.index-post.pure-u-md-1-2
           //-
             h1.post-title
               include _partial/helpers
