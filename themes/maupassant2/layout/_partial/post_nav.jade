@@ -23,6 +23,11 @@ if page.next || page.prev
         a.pre.no-more(href='javascript:return false;')
           span
             = "You are reading the lastest post"
+          i
+            if page.thumbnail
+                img(src=page.thumbnail, class="nofancybox")
+              else
+                +thumbnailPNG(page.title)
 
     //-if page.next
       a.next(href=url_for(page.next_link ? page.next_link : page.next.path))= page.next.title
@@ -43,3 +48,8 @@ if page.next || page.prev
         a.next.no-more(href='javascript:return false;')
           span
             = "You are reading the oldest post"
+          i
+            if page.thumbnail
+                img(src=page.thumbnail, class="nofancybox")
+              else
+                +thumbnailPNG(page.title)

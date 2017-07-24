@@ -8,8 +8,9 @@ tag:
 - memorization
 - scope
 mathjax: true
-thumbnail: /images/transparency.png
 description: Using function-level shared variables as memorizers.
+thumbnail: /images/target.png
+
 
 ---
 

@@ -265,7 +265,6 @@ div {
     }
 }
 
-#index-posts {}
 
 
 .screen-wide-bg{
@@ -289,7 +288,7 @@ div {
 }
 
 #post_nav_container{
-    margin: 100px 0;
+    margin: 40px 0 40px;
     &:before,
     &:after,{
         height: 300px;
@@ -328,6 +327,7 @@ div {
         font-family: inherit;
     }
 }
+
 
 .index-post {
     margin: 0 0 40px 0;
@@ -372,6 +372,7 @@ div {
         @extend .secondaryFadeInUp;
     }
     .readmore {
+        text-align: center;
         @extend .secondaryFadeInUp;
     }
 }
@@ -395,23 +396,25 @@ div {
 
 .tagcloud a, 
 .tags a {
-    font-family: 'Imprima', sans-serif;
+    font-family: $descFont;
     // border: 1px solid #DDDDDD;
     // border-bottom: 1px solid #DDDDDD;
     // border-right: 1px solid #DDDDDD;
-    margin-right: 2px;
-    margin-bottom: 10px;
-    vertical-align: bottom;
+    font-size: 16px;
+    margin-right: 10px;
+    // margin-bottom: 10px;
+    vertical-align: middle;
+    line-height: 30px;
     text-transform: capitalize;
     // background-color: $tagGray;
     // border-radius: 3px;
-    padding: 3px 5px;
+    // padding: 3px 5px;
     display: inline-block;
     color: #444;
     &:before {
         font-family: "FontAwesome";
         content: "\f02b";
-        padding-right: 0.3em;
+        padding-right: 5px;
     }
 }
 
@@ -419,23 +422,12 @@ div {
 .post{
     
     .post-header{
-        margin: 60px 0;
-        padding-bottom: 30px;
-    }
-    
-    .post-title {
-        margin: 50px 0 10px;
-        text-align: left;
-        font-weight: normal;
-        font-size: 35px;
-        font-family: $titleFont;
-        line-height: 1.5em;        
-        a {
-            color: #555;
+        margin: 100px 0;
+        .post-header-container{
+            margin: 50px 0;
         }
-        
-        @extend .primaryFadeInUp;
     }
+
     .post-thumbnail{
         position: relative;
         float: right;
@@ -448,17 +440,36 @@ div {
             filter: blur(3px);
             opacity: 0.4;
         }
+        @extend .secondaryFadeInUp;
     }
+
+    .post-title {
+        // margin: 50px 0 0;
+        text-align: left;
+        font-weight: normal;
+        font-size: 35px;
+        font-family: $titleFont;
+        line-height: 1.5em;        
+        a {
+            color: #555;
+        }
+        
+        @extend .primaryFadeInUp;
+    }
+    
     .post-desc {
         font-family: $descFont;
+        font-size: large;
         line-height: 1.3em;
-        font-weight: normal;
+        margin: 1.3em 0;
         @extend .secondaryFadeInUp;
     }
     .post-meta {
         padding: 0;
-        margin: 40px 0 40px;
+        line-height: 1.3em;
+        margin: 1.3em 0;
         @extend .secondaryFadeInUp;
+
         .author{
             margin-right: 1em;
             &:before {
@@ -473,6 +484,18 @@ div {
                 font-family: "FontAwesome";
                 content: "\f0f4";
                 padding: 3px 5px;
+            }
+        }
+        .thumbnailLink{
+            &:before {
+                font-family: "FontAwesome";
+                content: "\f1fc";
+                padding: 3px 5px;
+            }
+            div{
+                display: inline;
+                color: #333;
+                font-size: 12px;
             }
         }
     }
@@ -514,7 +537,7 @@ div {
         font-size: 16px;
         line-height: 1.77;
         color: #000;
-        margin: 4em 0;
+        margin: 100px 0 150px;
         padding: 0;
         border-radius: 3px; // text-align: justify;
         // text-justify: distribute;
@@ -1209,7 +1232,7 @@ screen and (min-width: 48em) {
 .readmore {
     margin: 20px 0;
     line-height: 40px;
-    text-align: center !important;
+    // text-align: center !important;
     overflow: hidden;
     a {
         padding: 9px 15px;
@@ -1988,7 +2011,7 @@ figure.highlight,
         margin: 15px 0;
         span {
             color: #000;
-            min-width: 100px;
+            min-width: 150px;
             max-width: 100%; 
             line-height: 30px; 
             // text-align: center;
@@ -1997,8 +2020,8 @@ figure.highlight,
             // border-radius: 3px;
             float: left; 
             margin: 0;
-            padding: 60px 0 0; 
-            background: linear-gradient(180deg, rgba(243, 246, 247, 0.1) 50px, #F3F6F7 80px, #F3F6F7);
+            padding: 50px 0 0; 
+            background: linear-gradient(180deg, rgba(243, 246, 247, 0.1) 20px, #F3F6F7 60px, #F3F6F7);
             // background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 50px, #fff 80px, #fff);
             font-family: $titleFont;
             position: relative;
@@ -2015,19 +2038,24 @@ figure.highlight,
                 line-height: 24px;
                 color: $primaryBlue;
                 letter-spacing: 1px;
-                padding: 2px 6px;
-                border: 1px solid $primaryBlue;
-                border-radius: 3px;
+                // padding: 2px 6px;
+                // border: 1px solid $primaryBlue;
+                // border-radius: 3px;
             }
         }
         &:hover {
             color: #222;
-            span:before {
-                background: $secondaryBlue;
+            // span:before {
+            //     background: $primaryBlue;
+            //     color: #fff;
+            // }
+            i img{
+                transition: transform 0.3s;
+                transform: rotate(8deg) scale(0.95);
             }
         }
         &.pre {
-            text-align: left;
+            // text-align: left;
             span:before {
                 left: 0;
                 content: "\f0d9  PREV"; // text-align: left;
@@ -2036,7 +2064,7 @@ figure.highlight,
         }
         &.next {
             // float: left;
-            text-align: right;
+            // text-align: right;
             span:before {
                 right: 0;
                 content: "NEXT  \f0da"; // text-align: right;
@@ -2050,12 +2078,18 @@ figure.highlight,
             }
             span:before{
                 color: #888;
-                border-color: #888;
+                // border-color: #888;
                 text-decoration: line-through;
             }
             &:hover{
                 span:before{
                     background: transparent;
+                }
+            }
+            i{
+                img{
+                    filter: grayscale(100%);
+                    opacity: 0.4;
                 }
             }
         }
@@ -2064,14 +2098,17 @@ figure.highlight,
         i {
             img {
                 padding-top: 5px;
-                height: 100px;
+                height: 90px;
+                transition: transform 0.3s;
+                transform: rotate(0deg) scale(1);
             }
+            
             filter: blur(2px);
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            bottom: 10px;
+            bottom: 20px;
             overflow: hidden;
             z-index: -1;
             vertical-align: middle;

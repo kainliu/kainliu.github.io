@@ -7,6 +7,8 @@ tag:
 - heap
 mathjax: true
 description: From brute force to vigilant power.
+thumbnail: /images/cart.png
+
 ---
 
 In previous blog [Complexity of Python Operations](/posts/complexity-of-python-operations/), I noticed that the way that Richard used to solve the biggest K problem by heap is arguable. 
