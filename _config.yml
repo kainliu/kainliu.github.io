@@ -71,9 +71,8 @@ theme: maupassant2
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: https://github.com/kainliu/kainliu.github.io.git
+  repo: https://github.com/lkaihua/lkaihua.github.io.git
   branch: master
-
 
 # Feed
 feed:
