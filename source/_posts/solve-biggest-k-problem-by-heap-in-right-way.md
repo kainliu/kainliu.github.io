@@ -90,33 +90,35 @@ $$ S = \sum\_{h=1}^H \frac{h}{2^{h}} = \frac{1}{2} + \frac{2}{4} + \frac{3}{8} +
 And $S$ has a limit, plotted as follows,
 ![Using R to visualize the limit of $S$.](/images/heap-limit.png)
 
+$$ \lim_{x\to\infty} S = 2 $$
+
 We can come to a conclusion that, 
 
 <center>The time complexity of building a heap is `O(N)`.</center>
 
 ### Back to finding K biggest
 
-First, we will add each element into an array, which costs `N`.
+First, add each element into an array, which will cost `O(N)`.
 
-Second, build a **max heap** from 1 level above bottom, which equals the elements with index less than half of the length, which costs `N`.
+Second, build a **max heap** from nodes in 1-level above bottom. Traverse over these nodes, with index less than half of the total amount, will cost `O(N)`.
 
-Third, extract the top node, and re-heapify after each extraction, which cost `logN * K`.
+Third, extract the top node, and re-heapify after each extraction, which will cost `O(logN * K)`.
 
-In total, it costs $2 N + K log N$ operations. 
+In total, it costs $O(2 N + K logN)$ operations. 
 
-<center>No matter whether N or K gets bigger, heap enhanced implementation will always keep a stable and low time complexity.</center>
+<center>As N/K grows, heap enhanced implementation keeps a stable and low time complexity.</center>
 
 
 #### Keep a heap of size `K`
 
 Another idea will be only to keep biggest K elements known so far, as a **min heap**. Every time when the new value is bigger than the smallest one in heap, we replace and re-heapify. This solution only requires one traversal of the array.
 
-The overall complexity is $O(logK) \* O(N) = O(N log K)$. This solution requires much smaller space but in exchange takes longer time when $K$ grows.
+The overall complexity is $O(logK) \* O(N) = O(N log K)$. This solution requires much smaller space but in exchange it will take longer time.
 
-But again, heap enchanced solution beats the previous $O(NK)$ solution.
+But still, heap enchanced solution outperforms the $O(NK)$ solution.
 
 
-Heap rocks!
+Heap rocks! Richard's conclusion is not true, as an example for *sometimes there is not a “best all the time” implementation*, his statement is not accurate.
 
 
 

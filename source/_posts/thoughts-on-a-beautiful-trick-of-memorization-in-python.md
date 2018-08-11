@@ -304,7 +304,7 @@ The `Big O` of `fib` is $O(2^n)$ ([stackoverflow](https://stackoverflow.com/ques
 
 Memorization contributes a lot, and actually it is the core of *Dynamic Programming*. Some would like to introduce DP as,
 
-> **Top-down Dynamic Programming** = **Divide & Conquer** + **Memorization**
+<center> Top-down Dynamic Programming = Divide & Conquer + Memorization </center>
 
 And I think this equation explains *Dynamic Programming* better than the name itself.
 
